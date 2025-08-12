@@ -1,0 +1,247 @@
+// ** Main Imports
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
+import { getCookie } from 'cookies-next'
+import notify from 'src/utils/notify'
+
+// ** Async thunk for storing a receipt
+export const updatePurchase = createAsyncThunk('Purchases/updatePurchase', async payload => {
+  // ** Get the token and url from the cookie
+  const token = getCookie('token')
+  const url = getCookie('apiUrl')
+
+  // ** Destruct the payload
+  const { values, id } = payload
+
+  console.log(values, id, 'Values ID from update purchase')
+
+  // ** Extract the date components 2024-09-30 01:12
+  let yearTrans = values.transaction_date.getFullYear()
+  let monthTrans = String(values.transaction_date.getMonth() + 1).padStart(2, '0')
+  let dayTrans = String(values.transaction_date.getDate()).padStart(2, '0')
+  let hoursTrans = String(values.transaction_date.getHours()).padStart(2, '0')
+  let minutesTrans = String(values.transaction_date.getMinutes()).padStart(2, '0')
+  // ** This is the due date
+  let yearDue = values.due_date.getFullYear()
+  let monthDue = String(values.due_date.getMonth() + 1).padStart(2, '0')
+  let dayDue = String(values.due_date.getDate()).padStart(2, '0')
+  let hoursDue = String(values.due_date.getHours()).padStart(2, '0')
+  let minutesDue = String(values.due_date.getMinutes()).padStart(2, '0')
+
+  // ** Format the date
+  let formattedTransDate = `${yearTrans}-${monthTrans}-${dayTrans} ${hoursTrans}:${minutesTrans}`
+  let formattedDueDate = `${yearDue}-${monthDue}-${dayDue} ${hoursDue}:${minutesDue}`
+
+  // ** Create a new FormData instance
+  const formData = new FormData()
+
+  formData.append('supplier_id', values.contact_id === values.sup_id ? values.sup_id : values.contact_id)
+  formData.append('sup_id', values.sup_id)
+  formData.append('sup_refe', values.sup_refe)
+  formData.append('ref_no', values.ref_no)
+  formData.append('pay_term_type', formattedDueDate)
+  formData.append('project_no', values.project_no)
+  formData.append('status', values.status)
+  formData.append('old_sts', values.old_sts)
+  formData.append('cost_center_id', values.cost_center_id)
+  formData.append('location_id', 1)
+  formData.append('exchange_rate', 1)
+  formData.append('dis_type', 1)
+  formData.append('transaction_date', formattedTransDate)
+  formData.append('currency_id', values.currency_id)
+  formData.append('currency_id_amount', values.currency_id_amount)
+  formData.append('store_id', values.store_id)
+  formData.append('list_price', values.parent_price)
+  formData.append('dialog', values.contact_id === values.sup_id ? 0 : 1)
+  formData.append('check', values.check)
+
+  formData.append('contact_id', values.contact_id)
+  formData.append('total_before_tax', values.sub_total)
+  formData.append('total_before_tax_cur', values.sub_total_curr)
+  formData.append('discount_type', values.discount_type)
+  formData.append('discount_amount', values.discount_amount)
+  formData.append('tax_id', values.tax_amount)
+  formData.append('shipping_details', values.shipping_details)
+  formData.append('final_total', Number(values.final_additional_supplier) - Number(values.additional_supplier_charges))
+  formData.append('final_total_hidden_', values.final_additional_supplier)
+  formData.append('additional_notes', values.additional_notes)
+  formData.append('ADD_SHIP', values.additional_supplier_charges)
+  formData.append('ADD_SHIP_', values.additional_cost_charges)
+  formData.append('tax_amount', values.tax_final)
+  formData.append('add_currency_id', values.expense_currency_id)
+  formData.append('add_currency_id_amount', values.expense_currency_id_amount)
+
+  if (Array.isArray(values.expense) && values.expense.length > 0) {
+    values.expense
+      .filter(item => !item.old)
+      .forEach((item, index) => {
+        const formattedShippingDate = item.date ? item.date.toISOString().split('T')[0] : ''
+
+        formData.append(`shipping_contact_id[${index}]`, item.supplier)
+        formData.append(`shipping_amount[${index}]`, item.amount)
+        formData.append(`shipping_vat[${index}]`, item.vat)
+        formData.append(`shipping_total[${index}]`, item.total)
+        formData.append(`shipping_total_curr[${index}]`, item.total_curr)
+        formData.append(`shipping_vat_curr[${index}]`, item.vat_curr)
+        formData.append(`shipping_amount_curr[${index}]`, item.amount_curr)
+        formData.append(`shiping_text[${index}]`, item.note)
+        formData.append(`shipping_account_id[${index}]`, item.debit)
+        formData.append(`shipping_cost_center_id[${index}]`, item.cost_center)
+        formData.append(`shiping_date[${index}]`, formattedShippingDate)
+        formData.append(`line_currency_id[${index}]`, item.currency_id)
+        formData.append(`line_currency_id_amount[${index}]`, item.currency_id_amount)
+      })
+
+    values.expense
+      .filter(item => item.old)
+      .forEach((item, index) => {
+        const formattedShippingDate = item.date ? item.date.toISOString().split('T')[0] : ''
+
+        formData.append(`additional_shipping_item_id[${index}]`, item.id)
+        formData.append(`old_shipping_contact_id[${index}]`, item.supplier)
+        formData.append(`old_shipping_amount[${index}]`, item.amount)
+        formData.append(`old_shipping_vat[${index}]`, item.vat)
+        formData.append(`old_shipping_total[${index}]`, item.total)
+        formData.append(`old_shipping_total_curr[${index}]`, item.total_curr)
+        formData.append(`old_shipping_vat_curr[${index}]`, item.vat_curr)
+        formData.append(`old_shipping_amount_curr[${index}]`, item.amount_curr)
+        formData.append(`old_shiping_text[${index}]`, item.note)
+        formData.append(`old_shipping_account_id[${index}]`, item.debit)
+        formData.append(`old_shipping_cost_center_id[${index}]`, item.cost_center)
+        formData.append(`old_shiping_date[${index}]`, formattedShippingDate)
+        formData.append(`old_line_currency_id[${index}]`, item.currency_id)
+        formData.append(`old_line_currency_id_amount[${index}]`, item.currency_id_amount)
+      })
+  }
+
+  if (values.currency_id) {
+    formData.append('depending_curr', 'on')
+    formData.append('dis_currency', 1)
+  }
+
+  if (values.items && values.items.length > 0) {
+    values.items.forEach((item, index) => {
+      const pp_with_tax_new_currency =
+        Number(item.unit_price_before_dis_curr) + Number(item.unit_price_before_dis_curr) / Number(values.tax_value)
+      const total_cost_dis_new_currency = Number(item.unit_price_after_dis_curr)
+      const total_unit_cost_with_tax_new_currency =
+        Number(item.unit_price_after_dis_curr) + Number(item.unit_price_after_dis_curr) / Number(values.tax_value)
+
+      formData.append(`line_sort[${index}]`, index + 1)
+
+      formData.append(`purchases[${index}][quantity]`, item.quantity)
+      formData.append(`purchases[${index}][product_id]`, item.product_id)
+      formData.append(`purchases[${index}][purchase_line_id]`, item.id ? item.id : null)
+      formData.append(`purchases[${index}][variation_id]`, item.variation_id)
+      formData.append(`purchases[${index}][product_unit_id]`, item.unit_quantity)
+      formData.append(`purchases[${index}][sub_unit_id]`, item.unit)
+
+      formData.append(
+        `purchases[${index}][pp_without_discount_s]`,
+        item.unit_price_before_dis ? item.unit_price_before_dis : 0
+      )
+      formData.append(
+        `purchases[${index}][pp_without_discount]`,
+        item.unit_price_before_dis ? item.unit_price_before_dis : 0
+      )
+
+      formData.append(`purchases[${index}][list_price]`, item.child_price)
+      formData.append(`purchases[${index}][purchase_note]`, item.description)
+      formData.append(
+        `purchases[${index}][pp_with_tax]`,
+        item.unit_price_before_dis_include_vat ? item.unit_price_before_dis_include_vat : 0
+      )
+      formData.append(
+        `purchases[${index}][purchase_unit_cost_new_currency]`,
+        item.unit_price_before_dis_curr ? item.unit_price_before_dis_curr : 0
+      )
+      formData.append(
+        `purchases[${index}][purchase_unit_cost_with_tax_new_currency]`,
+        pp_with_tax_new_currency ? pp_with_tax_new_currency : 0
+      )
+      formData.append(`purchases[${index}][discount_percent]`, item.amount_discount ? item.amount_discount : 0)
+      formData.append(`purchases[${index}][purchase_price]`, item.unit_price_after_dis ? item.unit_price_after_dis : 0)
+      formData.append(
+        `purchases[${index}][unit_cost_after_tax]`,
+        item.unit_price_after_dis_include_vat ? item.unit_price_after_dis_include_vat : 0
+      )
+      formData.append(
+        `purchases[${index}][unit_cost_after_new_currency]`,
+        total_cost_dis_new_currency ? total_cost_dis_new_currency : 0
+      )
+      formData.append('purchase_line_tax_id', values.tax_amount)
+      formData.append(`purchases[${index}][item_tax]`, 0)
+      formData.append(`purchases[${index}][line_sort]`, index + 1)
+      formData.append(`purchases[${index}][mfg_date]`, item.mfg_date)
+      formData.append(`purchases[${index}][exp_date]`, item.exp_date)
+      formData.append(`purchases[${index}][unit_cost_after_tax_new_currency]`, total_unit_cost_with_tax_new_currency)
+      formData.append(`purchases[${index}][total_cost_after_tax]`, item.total)
+    })
+  }
+
+  // ** files and media
+  if (values.attachment && values.attachment.length > 0) {
+    values.attachment.forEach((item, index) => {
+      formData.append(`document[${index}]`, item)
+    })
+  }
+  if (values.expense_attachment && values.expense_attachment.length > 0) {
+    values.attachment.forEach((file, index) => {
+      formData.append(`document_expense[${index}]`, file)
+    })
+  }
+
+  try {
+    const response = await axios.post(`${url}/app/react/purchase/update/${id}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+
+    return response.data
+  } catch (error) {
+    console.error(error)
+    console.log(error, 'this error form update purchase')
+  }
+})
+
+// ** Initial state Should be like this snippet of code (in Create or Update)
+const initialState = {
+  data: [],
+  loading: false,
+  error: false,
+  success: false
+}
+
+// ** Slice
+const postUpdatePurchaseSlice = createSlice({
+  name: 'updatePurchase',
+  initialState,
+  reducers: {},
+  extraReducers: builder => {
+    builder
+      .addCase(updatePurchase.pending, state => {
+        state.loading = true
+        state.error = false
+        state.success = false
+        state.data = null
+      })
+      .addCase(updatePurchase.fulfilled, (state, action) => {
+        state.loading = false
+        state.success = true
+        state.error = false
+        state.data = action.payload
+        notify('Purchase successfully stored.', 'success')
+      })
+      .addCase(updatePurchase.rejected, (state, action) => {
+        state.loading = false
+        state.success = false
+        state.error = true
+        state.error = action.error.message
+        notify('There is an error try again later', 'error')
+      })
+  }
+})
+
+export default postUpdatePurchaseSlice.reducer

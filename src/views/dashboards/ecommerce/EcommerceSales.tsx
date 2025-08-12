@@ -1,0 +1,18 @@
+// ** Custom Component Import
+import CardStatisticsVertical from 'src/@core/components/card-statistics/card-stats-vertical'
+
+const EcommerceSales = () => {
+  return (
+    <>
+      {/* @ts-ignore */}
+    <CardStatisticsVertical
+      title='Sales'
+      stats='$4,679'
+      trendNumber={28.14}
+      avatarSrc='/images/cards/stats-vertical-wallet.png'
+    />
+    </>
+  )
+}
+
+export default EcommerceSales
