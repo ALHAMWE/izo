@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { useDropzone } from 'react-dropzone'
-import XLSX from 'xlsx'
+import * as XLSX from "xlsx";
 import mammoth from 'mammoth'
 import { Box, Typography, Button } from '@mui/material'
 import FilePreview from './FilePreview' // Import the FilePreview component
