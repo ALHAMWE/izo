@@ -15,11 +15,13 @@ const initialState = {
 export const fetchPurchases = createAsyncThunk('dashboard/fetchPurchases', async payload => {
   const url = getCookie('apiUrl')
   const { token, query } = payload
+  const database = getCookie('DatabaseConnection')
 
   if (query) {
     const response = await axios.get(`${url}${query}`, {
       headers: {
-        Authorization: 'Bearer ' + `${token}`
+        Authorization: 'Bearer ' + `${token}`,
+        database:  `${database}`
       }
     })
 
