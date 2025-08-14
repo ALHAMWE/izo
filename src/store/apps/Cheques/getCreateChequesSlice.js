@@ -17,9 +17,10 @@ const initialState = {
 export const fetchCreateCheques = createAsyncThunk('dashboard/fetchCreateCheques', async () => {
   const url = getCookie('apiUrl')
   const token = getCookie('token')
+  const database = getCookie('DatabaseConnection')
   const response = await axios.get(`${url}/app/react/cheque/create`, {
     headers: {
-      Authorization: 'Bearer ' + `${token}`
+      Authorization: 'Bearer ' + `${token}`,database:  `${database}`,
     }
   })
 

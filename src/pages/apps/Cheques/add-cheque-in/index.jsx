@@ -55,7 +55,6 @@ const AddChequeIn = () => {
     bank_id: '',
     write_date: '',
     due_date: '',
-    document: [],
     document_expense: [],
     currency_value: '',
     date: '',

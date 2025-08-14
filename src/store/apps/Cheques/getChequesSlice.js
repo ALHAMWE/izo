@@ -5,6 +5,7 @@ import axios from 'axios'
 export const fetchCheques = createAsyncThunk('Cheques/fetchCheques', async payload => {
   const { token, url, startWriteDate, endWriteDate, startDueDate, endDueDate, month, weak, day } = payload
 
+  const database = getCookie('DatabaseConnection')
   let mainUrl = `${url}/app/react/cheque/all`
 
   if (startWriteDate && endWriteDate && startDueDate && endDueDate) {
@@ -63,7 +64,7 @@ export const fetchCheques = createAsyncThunk('Cheques/fetchCheques', async paylo
   }
 
   const response = await axios.get(`${mainUrl}`, {
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',database:  `${database}`  }
   })
 
   console.log(response.data, 'response.data form cheques slice 🍟🌭')

@@ -58,10 +58,12 @@ export const createCheques = createAsyncThunk('Cheques/createCheques', async pay
 
   formData.append('type', values.type)
 
+  const database = getCookie('DatabaseConnection')
   const response = await axios.post(`${url}/app/react/cheque/save`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+        database:  `${database}`,
     }
   })
 

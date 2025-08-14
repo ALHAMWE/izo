@@ -7,6 +7,7 @@ import notify from 'src/utils/notify'
 export const editCheques = createAsyncThunk('Cheques/editCheques', async payload => {
   const token = getCookie('token')
   const url = getCookie('apiUrl')
+  const database = getCookie('DatabaseConnection')
   const { id, values } = payload
   const formData = new FormData()
   // Extract the date components
@@ -75,7 +76,8 @@ export const editCheques = createAsyncThunk('Cheques/editCheques', async payload
   const response = await axios.post(`${url}/app/react/cheque/update/${id}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      database:  `${database}`,
     }
   })
 
