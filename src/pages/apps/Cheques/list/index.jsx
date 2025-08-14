@@ -86,7 +86,7 @@ const renderClient = row => {
 
 // ** Row options
 
-const RowOptions = ({ id, statusName, document, dueDate, editType }) => {
+const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
   // ** Hooks
   const dispatch = useDispatch()
   console.log('Status Name =>', statusName)
@@ -154,8 +154,6 @@ const RowOptions = ({ id, statusName, document, dueDate, editType }) => {
   }
 
   const handlePrint = id => {
-     if (typeof window === 'undefined') return; // كود لن يعمل على السيرفر
-
     // handle export to download file
     const headers = {
       Authorization: `Bearer ${token}`
@@ -174,10 +172,10 @@ const RowOptions = ({ id, statusName, document, dueDate, editType }) => {
           })
             .then(response => {
               const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
-              const link = document.createElement('a')
+              const link = documents.createElement('a')
               link.href = url
               link.setAttribute('download', 'voucher.pdf') //or any other extension
-              document.body.appendChild(link)
+              documents.body.appendChild(link)
               link.click()
               link.remove();
               window.URL.revokeObjectURL(url);
@@ -369,7 +367,7 @@ const RowOptions = ({ id, statusName, document, dueDate, editType }) => {
         </MenuItem>
 
         {/* attachments */}
-        {document && document.length > 0 ? (
+        {documents && documents.length > 0 ? (
           <MenuItem
             onClick={() => {
               handleRowOptionsClose()
@@ -512,7 +510,7 @@ const ChequesList = () => {
           editType={row.type}
           statusName={row.status_name}
           account_id={row.account_id}
-          document={row.document}
+          documents={row.document}
           dueDate={row.due_date}
         />
       )
