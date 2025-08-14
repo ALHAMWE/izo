@@ -10,14 +10,17 @@ const initialState = {
   error: null
 }
 
-const token = getCookie('token')
+// const token = getCookie('token')
+const database = getCookie('DatabaseConnection')
+const ApiUrl = getCookie('ApiUrl')
 
 // Define an async thunk to fetch data from the API
 export const fetchUsers = createAsyncThunk('users/fetchData', async () => {
   try {
-    const response = await axios.get(`https://test.izocloud.com/api/app/react/get-user`, {
+    const response = await axios.get(`${ApiUrl}/app/react/get-user`, {
       headers: {
-        Authorization: 'Bearer ' + `${token}`
+        // Authorization: 'Bearer ' + `${token}`,
+        database:`${database}`,
       }
     })
 

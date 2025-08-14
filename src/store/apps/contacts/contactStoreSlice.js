@@ -23,6 +23,7 @@ const formatDate = dateString => {
 
 // Async thunk action
 export const saveNewContact = createAsyncThunk('contactStore/saveNewContact', async (contact, { rejectWithValue }) => {
+  const database = getCookie('DatabaseConnection')
   const token = getCookie('token')
   const url = getCookie('apiUrl')
   try {
@@ -35,6 +36,7 @@ export const saveNewContact = createAsyncThunk('contactStore/saveNewContact', as
     const response = await axios.post(`${url}/app/react/contact/save`, newContact, {
       headers: {
         Authorization: 'Bearer ' + `${token}`,
+        database:  `${database}`,
         'Content-Type': 'multipart/form-data'
       }
     })

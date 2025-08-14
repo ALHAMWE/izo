@@ -7,9 +7,12 @@ import { getCookie } from 'cookies-next'
 export const fetchCreateContactData = createAsyncThunk('contact/fetchCreateContactData', async type => {
   const token = getCookie('token')
   const url = getCookie('apiUrl')
+  const database = getCookie('DatabaseConnection')
   const response = await axios.get(`${url}/app/react/contact/create?type=` + `${type}`, {
     headers: {
-      Authorization: 'Bearer ' + `${token}`
+      Authorization: 'Bearer ' + `${token}`,
+      database: `${database}`
+
     }
   })
 

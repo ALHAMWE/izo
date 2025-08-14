@@ -5,6 +5,7 @@ import { getCookie } from 'cookies-next'
 import notify from 'src/utils/notify'
 
 const token = getCookie('token')
+  const database = getCookie('DatabaseConnection')
 
 // Async Thunk Action for storing user
 export const postEditCustomerGroup = createAsyncThunk('dashboard/postEditCustomerGroup', async payload => {
@@ -20,7 +21,8 @@ export const postEditCustomerGroup = createAsyncThunk('dashboard/postEditCustome
   ) {
     const headers = {
       Authorization: `Bearer ${token}`, // Include the token in the 'Authorization' header
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      database:  `${database}`,
     }
 
     const dataToJSON = JSON.stringify(userData)

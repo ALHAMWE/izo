@@ -16,6 +16,7 @@ const initialState = {
 
 export const fetchViewContact = createAsyncThunk('dashboard/fetchViewContact', async payload => {
   const { token, id, startDate, endDate } = payload
+  const database = getCookie('DatabaseConnection')
 
   function convertDateFormat(inputDate) {
     // Split the input date using '/'
@@ -49,7 +50,8 @@ export const fetchViewContact = createAsyncThunk('dashboard/fetchViewContact', a
       `${url}/app/react/contact/view/${id}?start_date=${start_date}&end_date=${end_date}`,
       {
         headers: {
-          Authorization: 'Bearer ' + `${token}`
+          Authorization: 'Bearer ' + `${token}`,
+          database:  `${database}`,
         }
       }
     )

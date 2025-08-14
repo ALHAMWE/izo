@@ -15,11 +15,13 @@ const initialState = {
 }
 
 export const fetchSuppliers = createAsyncThunk('dashboard/fetchSuppliers', async token => {
+  const database = getCookie('DatabaseConnection')
   const url = getCookie('apiUrl')
   try {
     const response = await axios.get(`${url}/app/react/contact/supplier`, {
       headers: {
-        Authorization: 'Bearer ' + `${token}`
+        Authorization: 'Bearer ' + `${token}`,
+        database:`${database}`
       }
     })
 

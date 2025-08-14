@@ -47,15 +47,16 @@ const DialogEdit = ({ openEdit, setOpenEdit, itemId }) => {
 
   console.log(data, 'Date  after Edit')
 
+  const database = getCookie('DatabaseConnection')
   const token = getCookie('token')
   const url = getCookie('apiUrl')
 
   useEffect(() => {
-    if (token && url && itemId) {
+    if (token && url && database && itemId) {
       //@ts-ignore
       dispatch(fetchEditCustomerGroup({ token, url, itemId }))
     }
-  }, [dispatch, token, url, itemId])
+  }, [dispatch, token, url,database, itemId])
 
   const handleEditClose = () => setOpenEdit(false)
   const handleSubmit = (values, { resetForm }) => {
