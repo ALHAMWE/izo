@@ -154,6 +154,8 @@ const RowOptions = ({ id, statusName, document, dueDate, editType }) => {
   }
 
   const handlePrint = id => {
+     if (typeof window === 'undefined') return; // كود لن يعمل على السيرفر
+
     // handle export to download file
     const headers = {
       Authorization: `Bearer ${token}`
@@ -171,12 +173,14 @@ const RowOptions = ({ id, statusName, document, dueDate, editType }) => {
             responseType: 'blob' // important
           })
             .then(response => {
-              const url = window.URL.createObjectURL(new Blob([response.data]))
+              const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
               const link = document.createElement('a')
               link.href = url
               link.setAttribute('download', 'voucher.pdf') //or any other extension
               document.body.appendChild(link)
               link.click()
+              link.remove();
+              window.URL.revokeObjectURL(url);
             })
             .catch(error => {
               console.error('Error in second axios request:', error)

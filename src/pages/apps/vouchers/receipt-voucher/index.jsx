@@ -137,6 +137,7 @@ const RowOptions = ({ id, type }) => {
   }
 
   const handlePrint = id => {
+
     // handle export to download file
     const headers = {
       Authorization: `Bearer ${token}`
