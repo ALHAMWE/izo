@@ -9,7 +9,7 @@ module.exports = {
   trailingSlash: true,
   reactStrictMode: false,
   images: {
-    domains: ['test.izocloud.com']
+    domains: ['esai.izocloud.com']
   },
 
   webpack: config => {

@@ -156,9 +156,9 @@ const LoginFirstTime = () => {
         minHeight: '100vh'
       }}
     >
-      <CenterWrapper sx={{ margin: '20px 0' }}>
+      <CenterWrapper sx={{ margin: '0px 0' }}>
         <Image
-          src={'/izoLogo/izo_logo_black.png'}
+          src={'/izoLogo/izo-logo-dark.png'}
           alt='izo-logo'
           width={200}
           height={200}

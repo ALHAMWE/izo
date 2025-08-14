@@ -17,13 +17,15 @@ const initialState = {
 }
 
 export const fetchProducts = createAsyncThunk('dashboard/fetchProducts', async payload => {
+  const  database = getCookie('DatabaseConnection');
   const url = getCookie('apiUrl')
   const { token, query } = payload
 
   if (query) {
     const response = await axios.get(`${url}${query}`, {
       headers: {
-        Authorization: 'Bearer ' + `${token}`
+        Authorization: 'Bearer ' + `${token}`,
+        database: `${database}`
       }
     })
 
@@ -33,7 +35,8 @@ export const fetchProducts = createAsyncThunk('dashboard/fetchProducts', async p
   } else {
     const response = await axios.get(`${url}/app/react/products/all`, {
       headers: {
-        Authorization: 'Bearer ' + `${token}`
+        Authorization: 'Bearer ' + `${token}`,
+        database: `${database}`
       }
     })
 
