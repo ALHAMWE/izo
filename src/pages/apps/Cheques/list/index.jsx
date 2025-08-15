@@ -518,7 +518,7 @@ const ChequesList = () => {
     {
       flex: 0.25,
       minWidth: 180,
-      field: 'ref_no ',
+      field: 'ref_no',
       headerName: 'Ref No',
       renderCell: ({ row }) => {
         const { ref_no } = row
@@ -537,7 +537,7 @@ const ChequesList = () => {
     {
       flex: 0.25,
       minWidth: 220,
-      field: 'cheque_no ',
+      field: 'cheque_no',
       headerName: 'Cheque No',
       renderCell: ({ row }) => {
         const { cheque_no } = row

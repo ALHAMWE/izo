@@ -7,9 +7,10 @@ import notify from 'src/utils/notify'
 export const collect = createAsyncThunk('cheques/collect', async payload => {
   const token = getCookie('token')
   const url = getCookie('apiUrl')
+  const database = getCookie('DatabaseConnection')
   const { id, account_id, date } = payload
   const response = await axios.get(`${url}/app/react/cheque/collect/${id}?account_id=${account_id}&data=${date}`, {
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',database:`${database}` }
   })
 
   return response.data
