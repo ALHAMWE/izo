@@ -11,11 +11,8 @@ const initialState = {
   error: null
 }
 
-const token = getCookie('token')
-
-// const apiUrl = getCookie('apiUrl')
-
-  const database = getCookie('DatabaseConnection')
+const token     = getCookie('token')
+const database  = getCookie('DatabaseConnection')
 // Create an Axios instance with common headers
 const axiosInstance = axios.create({
   headers: {

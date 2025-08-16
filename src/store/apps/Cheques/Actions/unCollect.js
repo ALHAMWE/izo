@@ -5,12 +5,12 @@ import notify from 'src/utils/notify'
 
 // Async thunk for fetching the data
 export const unCollect = createAsyncThunk('cheques/unCollect', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
-  const database = getCookie('DatabaseConnection')
-  const { itemId } = payload
+  const token          = getCookie('token')
+  const url            = getCookie('apiUrl')
+  const database       = getCookie('DatabaseConnection')
+  const { itemId }     = payload
   const response = await axios.get(`${url}/app/react/cheque/un-collect/${itemId}`, {
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',database:`${database}` }
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' ,database : `${database}`}
   })
 
   return response.data

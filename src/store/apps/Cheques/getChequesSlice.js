@@ -3,41 +3,43 @@ import axios from 'axios'
 
 // Async thunk for fetching the data
 export const fetchCheques = createAsyncThunk('Cheques/fetchCheques', async payload => {
-  const { token, url, startWriteDate, endWriteDate, startDueDate, endDueDate, month, weak, day } = payload
+  const { token, url, database, startWriteDate, endWriteDate, startDueDate, endDueDate, month, weak, day } = payload
 
-  const database = getCookie('DatabaseConnection')
+
+  console.log("Database :: "+ database)
+
   let mainUrl = `${url}/app/react/cheque/all`
 
   if (startWriteDate && endWriteDate && startDueDate && endDueDate) {
     // Extract the date components
-    let yearStartWriteDate = startWriteDate.getFullYear()
+    let yearStartWriteDate  = startWriteDate.getFullYear()
     let monthStartWriteDate = String(startWriteDate.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
-    let dayStartWriteDate = String(startWriteDate.getDate()).padStart(2, '0')
+    let dayStartWriteDate   = String(startWriteDate.getDate()).padStart(2, '0')
 
-    let yearEndWriteDate = endWriteDate.getFullYear()
-    let monthEndWriteDate = String(endWriteDate.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
-    let dayEndWriteDate = String(endWriteDate.getDate()).padStart(2, '0')
+    let yearEndWriteDate    = endWriteDate.getFullYear()
+    let monthEndWriteDate   = String(endWriteDate.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
+    let dayEndWriteDate     = String(endWriteDate.getDate()).padStart(2, '0')
 
-    let yearStartDueDate = startDueDate.getFullYear()
-    let monthStartDueDate = String(startDueDate.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
-    let dayStartDueDate = String(startDueDate.getDate()).padStart(2, '0')
+    let yearStartDueDate    = startDueDate.getFullYear()
+    let monthStartDueDate   = String(startDueDate.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
+    let dayStartDueDate     = String(startDueDate.getDate()).padStart(2, '0')
 
-    let yearEndDueDate = endDueDate.getFullYear()
-    let monthEndDueDate = String(endDueDate.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
-    let dayEndDueDate = String(endDueDate.getDate()).padStart(2, '0')
+    let yearEndDueDate      = endDueDate.getFullYear()
+    let monthEndDueDate     = String(endDueDate.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
+    let dayEndDueDate       = String(endDueDate.getDate()).padStart(2, '0')
     // Format the date
     let formattedStartWriteDate = `${yearStartWriteDate}-${monthStartWriteDate}-${dayStartWriteDate}`
-    let formattedEndWriteDate = `${yearEndWriteDate}-${monthEndWriteDate}-${dayEndWriteDate}`
-    let formattedStartDueDate = `${yearStartDueDate}-${monthStartDueDate}-${dayStartDueDate}`
-    let formattedEndDueDate = `${yearEndDueDate}-${monthEndDueDate}-${dayEndDueDate}`
+    let formattedEndWriteDate   = `${yearEndWriteDate}-${monthEndWriteDate}-${dayEndWriteDate}`
+    let formattedStartDueDate   = `${yearStartDueDate}-${monthStartDueDate}-${dayStartDueDate}`
+    let formattedEndDueDate     = `${yearEndDueDate}-${monthEndDueDate}-${dayEndDueDate}`
 
     mainUrl = `${url}/app/react/cheque/all?writeDateFrom=${formattedStartWriteDate}&writeDateTo=${formattedEndWriteDate}&dueDateFrom=${formattedStartDueDate}&dueDateTo=${formattedEndDueDate}`
   } else if (month) {
     // ** Date format: YYYY-MM-DD
 
-    let yearMonth = String(month.getFullYear())
-    let monthMonth = String(month.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
-    let dayMonth = String(month.getDate()).padStart(2, '0')
+    let yearMonth   = String(month.getFullYear())
+    let monthMonth  = String(month.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
+    let dayMonth    = String(month.getDate()).padStart(2, '0')
 
     // ** Normal Format
     let formattedMonth = `${yearMonth}-${monthMonth}-${dayMonth}`
@@ -45,18 +47,18 @@ export const fetchCheques = createAsyncThunk('Cheques/fetchCheques', async paylo
     mainUrl = `${url}/app/react/cheque/all?month=${formattedMonth}`
   } else if (weak) {
     // ** Date format: YYYY-MM-DD
-    let yearWeak = String(weak.getFullYear())
-    let monthWeak = String(weak.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
-    let dayWeak = String(weak.getDate()).padStart(2, '0')
+    let yearWeak   = String(weak.getFullYear())
+    let monthWeak  = String(weak.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
+    let dayWeak    = String(weak.getDate()).padStart(2, '0')
 
     // ** Normal Format
     let formattedWeak = `${yearWeak}-${monthWeak}-${dayWeak}`
     mainUrl = `${url}/app/react/cheque/all?week=${formattedWeak}`
   } else if (day) {
     // ** Date format: YYYY-MM-DD
-    let yearDay = String(day.getFullYear())
-    let monthDay = String(day.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
-    let dayDay = String(day.getDate()).padStart(2, '0')
+    let yearDay   = String(day.getFullYear())
+    let monthDay  = String(day.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
+    let dayDay    = String(day.getDate()).padStart(2, '0')
 
     // ** Normal Format
     let formattedDay = `${yearDay}-${monthDay}-${dayDay}`

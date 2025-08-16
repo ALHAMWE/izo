@@ -5,26 +5,29 @@ import notify from 'src/utils/notify'
 
 // Async thunk for storing a receipt
 export const createCheques = createAsyncThunk('Cheques/createCheques', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
-  const { values } = payload
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
+  const { values }  = payload
 
   console.log(values, 'values from create Cheques')
 
-  const formData = new FormData()
+  const formData  = new FormData()
+
   // Extract the date components
-  let yearWrite = values.write_date.getFullYear()
-  let monthWrite = String(values.write_date.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
-  let dayWrite = String(values.write_date.getDate()).padStart(2, '0')
+  let yearWrite   = values.write_date.getFullYear()
+  let monthWrite  = String(values.write_date.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
+  let dayWrite    = String(values.write_date.getDate()).padStart(2, '0')
 
   // for due date
-  let yearDue = values.due_date.getFullYear()
-  let monthDue = String(values.due_date.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
-  let dayDue = String(values.due_date.getDate()).padStart(2, '0')
+  let yearDue     = values.due_date.getFullYear()
+  let monthDue    = String(values.due_date.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
+  let dayDue      = String(values.due_date.getDate()).padStart(2, '0')
 
   // Format the date
-  let formattedWriteDate = `${yearWrite}-${monthWrite}-${dayWrite}`
-  let formattedDueDate = `${yearDue}-${monthDue}-${dayDue}`
+  let formattedWriteDate  = `${yearWrite}-${monthWrite}-${dayWrite}`
+  let formattedDueDate    = `${yearDue}-${monthDue}-${dayDue}`
+
   formData.append('cheque_no', values.cheque_no)
   formData.append('write_date', formattedWriteDate)
   formData.append('bank_id', values.bank_id)
@@ -48,7 +51,6 @@ export const createCheques = createAsyncThunk('Cheques/createCheques', async pay
       formData.append(`bill_id[${index}]`, bill_id)
     })
   }
-
   // if bill_amount is not empty else do nothing
   if (values.bill_amount && values.bill_amount.length > 0) {
     values.bill_amount.forEach((bill_amount, index) => {
@@ -58,7 +60,6 @@ export const createCheques = createAsyncThunk('Cheques/createCheques', async pay
 
   formData.append('type', values.type)
 
-  const database = getCookie('DatabaseConnection')
   const response = await axios.post(`${url}/app/react/cheque/save`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,

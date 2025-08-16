@@ -7,6 +7,7 @@ import notify from 'src/utils/notify'
 export const createContactBank = createAsyncThunk('ContactBank/createContactBank', async payload => {
   const token = getCookie('token')
   const url = getCookie('apiUrl')
+  const database = getCookie('DatabaseConnection')
   const { values } = payload
   const formData = new FormData()
 
@@ -16,7 +17,7 @@ export const createContactBank = createAsyncThunk('ContactBank/createContactBank
   const response = await axios.post(`${url}/app/react/contact-bank/save`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',database : `${database}`
     }
   })
 

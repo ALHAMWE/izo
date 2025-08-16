@@ -5,20 +5,12 @@ import axios from 'axios'
 // ** Next Imports
 import { getCookie } from 'cookies-next'
 
-// Define the initial state
-const initialState = {
-  data: null,
-  status: '',
-  loading: false,
-
-  error: null
-}
 
 export const fetchCreateCheques = createAsyncThunk('dashboard/fetchCreateCheques', async () => {
-  const url = getCookie('apiUrl')
-  const token = getCookie('token')
-  const database = getCookie('DatabaseConnection')
-  const response = await axios.get(`${url}/app/react/cheque/create`, {
+  const url        = getCookie('apiUrl')
+  const token      = getCookie('token')
+  const database   = getCookie('DatabaseConnection')
+  const response   = await axios.get(`${url}/app/react/cheque/create`, {
     headers: {
       Authorization: 'Bearer ' + `${token}`,database:  `${database}`,
     }
@@ -28,6 +20,14 @@ export const fetchCreateCheques = createAsyncThunk('dashboard/fetchCreateCheques
 
   return data
 })
+
+// Define the initial state
+const initialState = {
+  data: null,
+  status: '',
+  loading: false,
+  error: null
+}
 
 // Create a Redux slice
 const getCreateChequesSlice = createSlice({

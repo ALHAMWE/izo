@@ -17,9 +17,10 @@ const initialState = {
 export const fetchCreateContactBank = createAsyncThunk('dashboard/fetchCreateContactBank', async () => {
   const url = getCookie('apiUrl')
   const token = getCookie('token')
+  const database = getCookie('DatabaseConnection')
   const response = await axios.get(`${url}/app/react/contact-bank/create`, {
     headers: {
-      Authorization: 'Bearer ' + `${token}`
+      Authorization: 'Bearer ' + `${token}`,database : `${database}`
     }
   })
 

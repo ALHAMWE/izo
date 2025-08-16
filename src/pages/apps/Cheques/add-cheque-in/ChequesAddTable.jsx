@@ -26,6 +26,24 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }
 }))
 
+const RowOptions = ({ id }) => {
+  const [isClicked, setIsClicked] = useState(false)
+
+  return (
+    <Fragment>
+      <IconButton
+        size='small'
+        onClick={() => {
+          alert(`View ${id}`)
+          setIsClicked(!isClicked)
+        }}
+      >
+        <Icon icon='bx:show' fontSize={20} color={isClicked ? 'primary' : 'inherit'} />
+      </IconButton>
+    </Fragment>
+  )
+}
+
 const ChequesAddTable = ({ values, handleChange, remove, setFieldValue, push }) => {
   const [rows, setRows] = useState([])
   // const [oldBackPayment, setOldBackPayment] = useState(0)
@@ -407,20 +425,3 @@ const ChequesAddTable = ({ values, handleChange, remove, setFieldValue, push }) 
 
 export default ChequesAddTable
 
-const RowOptions = ({ id }) => {
-  const [isClicked, setIsClicked] = useState(false)
-
-  return (
-    <Fragment>
-      <IconButton
-        size='small'
-        onClick={() => {
-          alert(`View ${id}`)
-          setIsClicked(!isClicked)
-        }}
-      >
-        <Icon icon='bx:show' fontSize={20} color={isClicked ? 'primary' : 'inherit'} />
-      </IconButton>
-    </Fragment>
-  )
-}

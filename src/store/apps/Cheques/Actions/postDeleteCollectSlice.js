@@ -13,9 +13,9 @@ const initialState = {
 
 // Define an async thunk for deleting a user
 export const deleteCollect = createAsyncThunk('dashboard/cheques/deleteCollect', async payload => {
-  const url = getCookie('apiUrl')
-  const token = getCookie('token')
-  const database = getCookie('DatabaseConnection')
+  const url       = getCookie('apiUrl')
+  const token     = getCookie('token')
+  const database  = getCookie('DatabaseConnection')
 
   try {
     const { id } = payload
@@ -24,7 +24,7 @@ export const deleteCollect = createAsyncThunk('dashboard/cheques/deleteCollect',
       `${url}/app/react/cheque/delete-collect/${id}`,
 
       {
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',database:`${database}` }
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' ,database : `${database}`}
       }
     )
     const data = response.data

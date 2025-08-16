@@ -110,11 +110,14 @@ interface UserData {
 }
 export async function getStaticProps() {
   try {
-    const token = getCookie('token');
-    const ApiUrl = getCookie('ApiUrl');
+    // const token = getCookie('token');
+    const ApiUrl   = getCookie('ApiUrl') || 'https://izocloud.com/api';
+
+    const database = getCookie('DatabaseConnection') || 'esai'
+
     const response = await axios.get(`${ApiUrl}/app/react/get-user`, {
       headers: {
-        Authorization: 'Bearer ' + `${token}`,
+          database:`${database}`,
       },
     });
 

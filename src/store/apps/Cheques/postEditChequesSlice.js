@@ -5,23 +5,28 @@ import notify from 'src/utils/notify'
 
 // Async thunk for storing a receipt
 export const editCheques = createAsyncThunk('Cheques/editCheques', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
-  const database = getCookie('DatabaseConnection')
+
+  const token          = getCookie('token')
+  const url            = getCookie('apiUrl')
+  const database       = getCookie('DatabaseConnection')
+
   const { id, values } = payload
-  const formData = new FormData()
+
+  const formData       = new FormData()
+
+  //#.. date format
   // Extract the date components
-  let yearWrite = values.write_date.getFullYear()
-  let monthWrite = String(values.write_date.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
-  let dayWrite = String(values.write_date.getDate()).padStart(2, '0')
+  let yearWrite             = values.write_date.getFullYear()
+  let monthWrite            = String(values.write_date.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
+  let dayWrite              = String(values.write_date.getDate()).padStart(2, '0')
 
-  let yearDue = values.due_date.getFullYear()
-  let monthDue = String(values.due_date.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
-  let dayDue = String(values.due_date.getDate()).padStart(2, '0')
-
+  let yearDue               = values.due_date.getFullYear()
+  let monthDue              = String(values.due_date.getMonth() + 1).padStart(2, '0') // Months are 0-based in JavaScript
+  let dayDue                = String(values.due_date.getDate()).padStart(2, '0')
   // Format the date
-  let formattedDateWrite = `${yearWrite}-${monthWrite}-${dayWrite}`
-  let formattedDateDue = `${yearDue}-${monthDue}-${dayDue}`
+  let formattedDateWrite    = `${yearWrite}-${monthWrite}-${dayWrite}`
+  let formattedDateDue      = `${yearDue}-${monthDue}-${dayDue}`
+
 
   formData.append('amount', values.amount)
   formData.append('cheque_no', values.cheque_no)
@@ -35,36 +40,38 @@ export const editCheques = createAsyncThunk('Cheques/editCheques', async payload
   formData.append('currency_id', values.currencies)
   formData.append('currency_id_amount', values.currency_value)
 
+
+  //# ... attachments
   if (values.attachment && values.attachment.length > 0) {
     values.attachment.forEach((attachment, index) => {
       formData.append(`document_expense[${index}]`, attachment)
     })
   }
+  //# ... relations
   if (values.bill_id && values.bill_id.length > 0) {
     values.bill_id.forEach((bill_id, index) => {
       formData.append(`bill_id[${index}]`, bill_id)
     })
   }
 
-  // if bill_amount is not empty else do nothing
   if (values.bill_amount && values.bill_amount.length > 0) {
     values.bill_amount.forEach((bill_amount, index) => {
       formData.append(`bill_amount[${index}]`, bill_amount)
     })
   }
+
   if (values.old_bill_id && values.old_bill_id.length > 0) {
     values.old_bill_id.forEach((old_bill_id, index) => {
       formData.append(`old_bill_id[${index}]`, old_bill_id)
     })
   }
-
   // if bill_amount is not empty else do nothing
   if (values.old_bill_amount && values.old_bill_amount.length > 0) {
     values.old_bill_amount.forEach((old_bill_amount, index) => {
       formData.append(`old_bill_amount[${index}]`, old_bill_amount)
     })
   }
-  // if bill_amount is not empty else do nothing
+
   if (values.payment_id && values.payment_id.length > 0) {
     values.payment_id.forEach((payment_id, index) => {
       formData.append(`payment_id[${index}]`, payment_id)
@@ -112,7 +119,7 @@ const postEditChequesSlice = createSlice({
         state.success = true
         state.error = false
         state.data = action.payload
-        notify('Cheque successfully updated.', 'success')
+        notify('Cheque Successfully Updated.', 'success')
       })
       .addCase(editCheques.rejected, (state, action) => {
         state.loading = false
