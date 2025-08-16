@@ -404,9 +404,6 @@ const ChequesAddTable = ({ values, handleChange, remove, setFieldValue, push }) 
     </>
   )
 }
-
-export default ChequesAddTable
-
 const RowOptions = ({ id }) => {
   const [isClicked, setIsClicked] = useState(false)
 
@@ -424,3 +421,6 @@ const RowOptions = ({ id }) => {
     </Fragment>
   )
 }
+
+export default ChequesAddTable
+
