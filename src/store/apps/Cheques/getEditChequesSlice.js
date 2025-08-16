@@ -5,20 +5,11 @@ import axios from 'axios'
 // ** Next Imports
 import { getCookie } from 'cookies-next'
 
-// Define the initial state
-const initialState = {
-  data: null,
-  status: '',
-  loading: false,
-
-  error: null
-}
-
 export const fetchEditCheques = createAsyncThunk('dashboard/fetchEditCheques', async payload => {
-  const url = getCookie('apiUrl')
-  const token = getCookie('token')
-  const database = getCookie('DatabaseConnection')
-  const { itemId } = payload
+  const url         = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const database    = getCookie('DatabaseConnection')
+  const { itemId }  = payload
   const response = await axios.get(`${url}/app/react/cheque/edit/${itemId}`, {
     headers: {
       Authorization: 'Bearer ' + `${token}`,
@@ -30,6 +21,15 @@ export const fetchEditCheques = createAsyncThunk('dashboard/fetchEditCheques', a
 
   return data
 })
+
+// Define the initial state
+const initialState = {
+  data: null,
+  status: '',
+  loading: false,
+  error: null
+}
+
 
 // Edit a Redux slice
 const getEditCheques = createSlice({

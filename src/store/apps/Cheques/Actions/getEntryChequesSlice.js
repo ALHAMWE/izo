@@ -14,10 +14,10 @@ const initialState = {
 }
 
 export const fetchChequeEntry = createAsyncThunk('dashboard/fetchChequeEntry', async payload => {
-  const url = getCookie('apiUrl')
-  const token = getCookie('token')
-  const database = getCookie('DatabaseConnection')
-  const { id } = payload
+  const url       = getCookie('apiUrl')
+  const token     = getCookie('token')
+  const database  = getCookie('DatabaseConnection')
+  const { id }    = payload
   const response = await axios.get(`${url}/app/react/cheque/entry/${id}`, {
     headers: {
       Authorization: 'Bearer ' + `${token}`,database : `${database}`
