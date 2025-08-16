@@ -3,9 +3,11 @@ import axios from 'axios'
 
 // Async thunk for fetching the data
 export const fetchCheques = createAsyncThunk('Cheques/fetchCheques', async payload => {
-  const { token, url, startWriteDate, endWriteDate, startDueDate, endDueDate, month, weak, day } = payload
+  const { token, url, database, startWriteDate, endWriteDate, startDueDate, endDueDate, month, weak, day } = payload
 
-  const database = getCookie('DatabaseConnection')
+
+  console.log("Database :: "+ database)
+
   let mainUrl = `${url}/app/react/cheque/all`
 
   if (startWriteDate && endWriteDate && startDueDate && endDueDate) {

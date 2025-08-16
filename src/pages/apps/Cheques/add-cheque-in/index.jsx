@@ -106,6 +106,7 @@ const AddChequeIn = () => {
   const transText = getCookie('fontStyle')
   const token = getCookie('token')
   const url = getCookie('apiUrl')
+  const database = getCookie('DatabaseConnection')
 
   const dispatch = useDispatch()
   const storeData = useSelector(state => state.getCreateCheque.data?.value)
@@ -175,7 +176,8 @@ const AddChequeIn = () => {
         dispatch(
           fetchCheques({
             token,
-            url
+            url,
+            database
           })
         )
       })

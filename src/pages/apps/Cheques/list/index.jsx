@@ -113,6 +113,7 @@ const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
 
   const token = getCookie('token')
   const url = getCookie('apiUrl')
+  const database = getCookie('DatabaseConnection')
 
   const handleRowOptionsClick = event => {
     setAnchorEl(event.currentTarget)
@@ -135,7 +136,8 @@ const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
         dispatch(
           fetchCheques({
             token,
-            url
+            url,
+            database
           })
         )
 
@@ -199,7 +201,8 @@ const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
           dispatch(
             fetchCheques({
               token,
-              url
+              url,
+              database
             })
           )
         } else {
@@ -217,7 +220,8 @@ const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
         dispatch(
           fetchCheques({
             token,
-            url
+            url,
+            database
           })
         )
       }
@@ -231,7 +235,8 @@ const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
         dispatch(
           fetchCheques({
             token,
-            url
+            url,
+            database
           })
         )
       }
@@ -246,7 +251,8 @@ const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
         dispatch(
           fetchCheques({
             token,
-            url
+            url,
+            database
           })
         )
 
@@ -478,6 +484,7 @@ const ChequesList = () => {
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
   const [token, setToken] = useState('')
   const [url, setUrl] = useState('')
+  const [database, setDatabase] = useState('')
   const [data, setData] = useState(null)
   const [searchText, setSearchText] = useState('')
   const [filteredData, setFilteredData] = useState([])
@@ -815,18 +822,21 @@ const ChequesList = () => {
   useEffect(() => {
     const token = getCookie('token')
     const url = getCookie('apiUrl')
+    const database = getCookie('DatabaseConnection')
 
     setToken(token)
 
     setUrl(url)
-  }, [token, url])
+    setDatabase(database)
+  }, [token, url,database])
 
   useEffect(() => {
-    if (token && url) {
+    if (token && url && database) {
       dispatch(
         fetchCheques({
           token,
           url,
+          database,
           startWriteDate,
           endWriteDate,
           startDueDate,
@@ -837,7 +847,7 @@ const ChequesList = () => {
         })
       )
     }
-  }, [dispatch, token, url, , startWriteDate, endWriteDate, startDueDate, endDueDate, month, day, week])
+  }, [dispatch, token, url, database, startWriteDate, endWriteDate, startDueDate, endDueDate, month, day, week])
 
   // ** Functions
   const escapeRegExp = value => {
