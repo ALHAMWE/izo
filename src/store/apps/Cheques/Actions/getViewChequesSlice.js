@@ -6,9 +6,10 @@ import { getCookie } from 'cookies-next'
 export const fetchViewCheque = createAsyncThunk('cheques/fetchViewCheque', async payload => {
   const token = getCookie('token')
   const url = getCookie('apiUrl')
+  const database = getCookie('DatabaseConnection')
   const { itemId } = payload
   const response = await axios.get(`${url}/app/react/cheque/view/${itemId}`, {
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',database : `${database}` }
   })
 
   return response.data

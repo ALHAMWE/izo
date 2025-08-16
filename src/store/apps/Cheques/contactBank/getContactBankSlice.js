@@ -6,8 +6,9 @@ import { getCookie } from 'cookies-next'
 export const fetchContactBank = createAsyncThunk('contactBank/fetchContactBank', async () => {
   const token = getCookie('token')
   const url = getCookie('apiUrl')
+  const database = getCookie('DatabaseConnection')
   const response = await axios.get(`${url}/app/react/contact-bank/all`, {
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',database : `${database}` }
   })
 
   return response.data
