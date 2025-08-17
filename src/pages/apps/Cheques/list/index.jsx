@@ -361,7 +361,7 @@ const RowOptions = ({ id, statusName, attach, dueDate, editType }) => {
           </MenuItem>
         )}
 
-        {/* print */}
+        {/* print
         <MenuItem
           onClick={() => {
             handleRowOptionsClose()
@@ -371,7 +371,7 @@ const RowOptions = ({ id, statusName, attach, dueDate, editType }) => {
         >
           <Icon icon='mingcute:print-line' fontSize={20} />
           Print
-        </MenuItem>
+        </MenuItem> */}
 
         {/* attachments */}
         {attach && attach.length > 0 ? (
