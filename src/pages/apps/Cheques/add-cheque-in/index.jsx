@@ -17,6 +17,7 @@ import {
   InputLabel,
   Autocomplete
 } from '@mui/material'
+
 import { useTheme } from '@mui/material/styles'
 import DatePicker from 'react-datepicker'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
@@ -42,10 +43,9 @@ const CustomInput = forwardRef(({ ...props }, ref) => {
 })
 
 const AddChequeIn = () => {
-  const [changeCurrency] = useState(0)
-  const [auth] = useState(true)
-  const [findContact, setFindContact] = useState(false)
-
+  const [auth]                            = useState(true)
+  const [changeCurrency]                  = useState(0)
+  const [findContact, setFindContact]     = useState(false)
   const [initialValues, setInitialValues] = useState({
     cheque_no: '',
     cheque_type: 0, // 0 for in 1 for out
@@ -88,9 +88,8 @@ const AddChequeIn = () => {
       }
     ]
   })
-
-  const [openLoading, setOpenLoading] = useState(false)
-  const [data, setData] = useState({
+  const [openLoading, setOpenLoading]     = useState(false)
+  const [data, setData]                   = useState({
     currency: [],
     contact_banks: [],
     accounts: [],
@@ -98,20 +97,20 @@ const AddChequeIn = () => {
   })
 
   const [contactText, setContactText] = useState('')
-  const theme = useTheme()
-  const { direction } = theme
-  const [bills, setBills] = useState([])
+  const theme                         = useTheme()
+  const { direction }                 = theme
+  const [bills, setBills]             = useState([])
   const popperPlacement = direction === 'ltr' ? 'bottom-start' : 'bottom-end'
-  const decimalFormat = getCookie('DecimalFormat')
-  const transText = getCookie('fontStyle')
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
-  const database = getCookie('DatabaseConnection')
+  const decimalFormat   = getCookie('DecimalFormat')
+  const transText       = getCookie('fontStyle')
+  const token           = getCookie('token')
+  const url             = getCookie('apiUrl')
+  const database        = getCookie('DatabaseConnection')
 
-  const dispatch = useDispatch()
-  const storeData = useSelector(state => state.getCreateCheque.data?.value)
-  const storeBills = useSelector(state => state.getBillsCheques.data?.value)
-  const createStatus = useSelector(state => state.postCreateCheque)
+  const dispatch      = useDispatch()
+  const storeData     = useSelector(state => state.getCreateCheque.data?.value)
+  const storeBills    = useSelector(state => state.getBillsCheques.data?.value)
+  const createStatus  = useSelector(state => state.postCreateCheque)
 
   const validationSchema = Yup.object().shape({
     cheque_no: Yup.string().required('Required'),
@@ -202,12 +201,12 @@ const AddChequeIn = () => {
       <Box sx={{ mb: 3 }}>
         <CardHeader title='Add Cheques In' sx={{ textTransform: transText }} />
       </Box>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmitForm}
-        enableReinitialize={true}
-      >
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmitForm}
+          enableReinitialize={true}
+        >
         {({ values, errors, touched, handleBlur, handleChange, setFieldValue }) => (
           <Form>
             <Box sx={{ p: 5 }}>
