@@ -155,44 +155,44 @@ const RowOptions = ({ id, statusName, attach, dueDate, editType }) => {
     setOpenEdit(!openEdit)
   }
 
-  // const handlePrint = id => {
-  //   // handle export to download file
-  //   const headers = {
-  //     Authorization: `Bearer ${token}`
-  //   }
-  //   axios({
-  //     url: `${url}/app/react/cheque/print/${id}`,
-  //     method: 'GET',
-  //     headers: headers
-  //   })
-  //     .then(response => {
-  //       if (response.data && response.data.value) {
-  //         axios({
-  //           url: response.data.value,
-  //           method: 'GET',
-  //           responseType: 'blob' // important
-  //         })
-  //           .then(response => {
-  //             const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
-  //             const link = document.createElement('a')
-  //             link.href = url
-  //             link.setAttribute('download', 'voucher.pdf') //or any other extension
-  //             document.body.appendChild(link)
-  //             link.click()
-  //             link.remove();
-  //             window.URL.revokeObjectURL(url);
-  //           })
-  //           .catch(error => {
-  //             console.error('Error in second axios request:', error)
-  //           })
-  //       } else {
-  //         console.error('Response data or info is undefined:', response)
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.error('Error in first axios request:', error)
-  //     })
-  // }
+  const handlePrint = id => {
+    // handle export to download file
+    const headers = {
+      Authorization: `Bearer ${token}`
+    }
+    axios({
+      url: `${url}/app/react/cheque/print/${id}`,
+      method: 'GET',
+      headers: headers
+    })
+      .then(response => {
+        if (response.data && response.data.value) {
+          axios({
+            url: response.data.value,
+            method: 'GET',
+            responseType: 'blob' // important
+          })
+            .then(response => {
+              const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
+              const link = document.createElement('a')
+              link.href = url
+              link.setAttribute('download', 'voucher.pdf') //or any other extension
+              document.body.appendChild(link)
+              link.click()
+              link.remove();
+              window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+              console.error('Error in second axios request:', error)
+            })
+        } else {
+          console.error('Response data or info is undefined:', response)
+        }
+      })
+      .catch(error => {
+        console.error('Error in first axios request:', error)
+      })
+  }
 
   const handleCollect = ({ id, account_id, date }) => {
     dispatch(collect({ id, account_id, date })).then(res => {
@@ -361,7 +361,7 @@ const RowOptions = ({ id, statusName, attach, dueDate, editType }) => {
           </MenuItem>
         )}
 
-        {/* print
+        print
         <MenuItem
           onClick={() => {
             handleRowOptionsClose()
@@ -371,7 +371,7 @@ const RowOptions = ({ id, statusName, attach, dueDate, editType }) => {
         >
           <Icon icon='mingcute:print-line' fontSize={20} />
           Print
-        </MenuItem> */}
+        </MenuItem>
 
         {/* attachments */}
         {attach && attach.length > 0 ? (
