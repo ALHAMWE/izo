@@ -21,11 +21,11 @@ export const verifyAuth = async (token, key, database) => {
     // console.log('keySecret.value 👾', keySecret.value)
 
     if (verification.secret_k === keySecret.value) {
-      if(databaseSecret.value != null){
+      // if(databaseSecret.value != null){
         return true
-      }else{
-        return null
-      }
+      // }else{
+        // return null
+      // }
     } else {
       return null
     }
