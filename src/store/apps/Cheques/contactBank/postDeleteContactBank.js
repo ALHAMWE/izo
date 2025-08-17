@@ -2,7 +2,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import notify from 'src/utils/notify'
-import { getCookie } from 'cookies-next'
 
 // Define the initial state
 const initialState = {
