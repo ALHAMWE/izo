@@ -5,9 +5,9 @@ import notify from 'src/utils/notify'
 
 // Async thunk for storing a receipt
 export const editContactBank = createAsyncThunk('ContactBank/editContactBank', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
-  const database = getCookie('DatabaseConnection')
+  const token          = getCookie('token')
+  const url            = getCookie('apiUrl')
+  const database       = getCookie('DatabaseConnection')
   const { values, id } = payload
   const formData = new FormData()
 

@@ -372,12 +372,14 @@ export const saveProduct = createAsyncThunk('dashboard/createProduct', async pay
     formData.append('product_compo', JSON.stringify(product.product_compo))
   }
 
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const response = await axios.post(`${url}/app/react/products/save`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      database:  `${database}`,
     }
   })
 

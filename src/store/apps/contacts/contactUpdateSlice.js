@@ -15,14 +15,14 @@ export const updateContact = createAsyncThunk('contactUpdate/updateContact', asy
 
   try {
     // rest of your code
-      const database = getCookie('DatabaseConnection')
-    const token = getCookie('token')
-    const url = getCookie('apiUrl')
+    const url         = getCookie('apiUrl')
+    const token       = getCookie('token')
+    const database    = getCookie('DatabaseConnection')
     const response = await axios.post(`${url}/app/react/contact/update/${id}`, updateData, {
       headers: {
         Authorization: 'Bearer ' + `${token}`,
-        database:  `${database}`,
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        database:  `${database}`
       }
     })
 

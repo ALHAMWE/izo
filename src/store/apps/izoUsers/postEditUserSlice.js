@@ -96,11 +96,14 @@ export const postEditUser = createAsyncThunk('user/postEditUser', async payload 
   formData.append('user_tax_id', userData.taxesItem || '')
 
   try {
-    const url = getCookie('apiUrl')
+    const url         = getCookie('apiUrl')
+    const database    = getCookie('DatabaseConnection')
+
     if (token !== undefined && token !== null && userData !== undefined && userData !== null) {
       const headers = {
         Authorization: `Bearer ${token}`, // Include the token in the 'Authorization' header
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        database:`${database}`
       }
 
       const response = await axios.post(`${url}/app/react/users/update/${itemId}`, formData, {

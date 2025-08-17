@@ -16,12 +16,14 @@ const initialState = {
 
 export const fetchEditCategory = createAsyncThunk('dashboard/fetchEditCategory', async payload => {
   const { itemId } = payload
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   try {
     const response = await axios.get(`${url}/app/react/category/edit/${itemId}`, {
       headers: {
-        Authorization: 'Bearer ' + `${token}`
+        Authorization: 'Bearer ' + `${token}`,
+        database:  `${database}`,
       }
     })
 

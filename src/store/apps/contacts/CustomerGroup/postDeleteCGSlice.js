@@ -14,8 +14,9 @@ const initialState = {
 
 // Define an async thunk for deleting a user
 export const postDeleteCustomerGroup = createAsyncThunk('dashboard/postDeleteCustomerGroup', async payload => {
-  const token = getCookie('token')
-  const database = getCookie('DatabaseConnection')
+  const token     = getCookie('token')
+  const database  = getCookie('DatabaseConnection')
+  const url       = getCookie('apiUrl')
 
   const axiosInstance = axios.create({
     headers: {
@@ -24,10 +25,10 @@ export const postDeleteCustomerGroup = createAsyncThunk('dashboard/postDeleteCus
       database:  `${database}`,
     }
   })
-  const { id } = payload
-  const url = getCookie('apiUrl')
-  const response = await axiosInstance.post(`${url}/app/react/customer-group/del/${id}`)
-  const data = response.data
+
+  const { id }    = payload
+  const response  = await axiosInstance.post(`${url}/app/react/customer-group/del/${id}`)
+  const data      = response.data
 
   return data
 })

@@ -4,8 +4,8 @@ import axios from 'axios'
 import { getCookie } from 'cookies-next'
 import notify from 'src/utils/notify'
 
-const token = getCookie('token')
-  const database = getCookie('DatabaseConnection')
+const token     = getCookie('token')
+const database  = getCookie('DatabaseConnection')
 
 // Async Thunk Action for storing user
 export const postEditCustomerGroup = createAsyncThunk('dashboard/postEditCustomerGroup', async payload => {

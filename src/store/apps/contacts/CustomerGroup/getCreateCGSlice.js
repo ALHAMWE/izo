@@ -16,10 +16,10 @@ const initialState = {
 
 export const fetchCreateCustomerGroup = createAsyncThunk('dashboard/fetchCreateCustomerGroup', async () => {
   try {
-    const url = getCookie('apiUrl')
-  const database = getCookie('DatabaseConnection')
+    const url         = getCookie('apiUrl')
+    const database    = getCookie('DatabaseConnection')
     const cookieToken = getCookie('token')
-    const response = await axios.get(`${url}/app/react/customer-group/create`, {
+    const response    = await axios.get(`${url}/app/react/customer-group/create`, {
       headers: {
         Authorization: 'Bearer ' + `${cookieToken}`,
         database:  `${database}`,

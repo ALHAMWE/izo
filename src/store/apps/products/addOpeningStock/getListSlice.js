@@ -16,8 +16,9 @@ const initialState = {
 }
 
 export const fetchOpeningStock = createAsyncThunk('Product/fetchAddOpeningStock', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const { month, weak, day, startDate, endDate } = payload
   let mainUrl = `${url}/app/react/opening-quantity/all`
 
@@ -67,7 +68,8 @@ export const fetchOpeningStock = createAsyncThunk('Product/fetchAddOpeningStock'
 
   try {
     const response = await axios.get(`${mainUrl}`, {
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',
+      database:  `${database}`, }
     })
 
     const data = response.data

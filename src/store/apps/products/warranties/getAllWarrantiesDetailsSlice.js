@@ -7,10 +7,12 @@ export const getWarrantyDetails = createAsyncThunk(
   'warrantyDetails/getWarrantyDetails',
   async (id, { rejectWithValue }) => {
     try {
-      const token = getCookie('token')
-      const url = getCookie('apiUrl')
+      const token       = getCookie('token')
+      const url         = getCookie('apiUrl')
+      const database    = getCookie('DatabaseConnection')
       const response = await axios.get(`${url}/app/react/warranties/edit/${id}`, {
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',
+      database:  `${database}`, }
       })
 
       return response.data

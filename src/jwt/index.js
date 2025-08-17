@@ -1,8 +1,9 @@
 import jwt_decode from 'jwt-decode'
 
-export const verifyAuth = async (token, key) => {
-  const tokenSecret = token
-  const keySecret = key
+export const verifyAuth = async (token, key, database) => {
+  const tokenSecret      = token
+  const keySecret        = key
+  const databaseSecret   = database
 
   // const stringToken = token.toString()
   // console.log('Token received:', token.value)
@@ -11,6 +12,7 @@ export const verifyAuth = async (token, key) => {
   try {
     const verification = await jwt_decode(tokenSecret.value)
 
+    // console.log('dB', databaseSecret)
     // console.log('verification', verification)
     // console.log('verification.secret_k', typeof verification.secret_k)
     // console.log('keySecret.value', typeof keySecret.value)
@@ -19,7 +21,11 @@ export const verifyAuth = async (token, key) => {
     // console.log('keySecret.value 👾', keySecret.value)
 
     if (verification.secret_k === keySecret.value) {
-      return true
+      if(databaseSecret.value != null){
+        return true
+      }else{
+        return null
+      }
     } else {
       return null
     }

@@ -23,9 +23,9 @@ const formatDate = dateString => {
 
 // Async thunk action
 export const saveNewContact = createAsyncThunk('contactStore/saveNewContact', async (contact, { rejectWithValue }) => {
-  const database = getCookie('DatabaseConnection')
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const database  = getCookie('DatabaseConnection')
+  const token     = getCookie('token')
+  const url       = getCookie('apiUrl')
   try {
     // change date of object contact
     const newContact = {

@@ -5,8 +5,9 @@ import notify from 'src/utils/notify'
 
 // Async thunk for storing a brand
 export const storeBrand = createAsyncThunk('brands/store', async brand => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const formData = new FormData()
 
   formData.append('name', brand.name)
@@ -17,7 +18,8 @@ export const storeBrand = createAsyncThunk('brands/store', async brand => {
   const response = await axios.post(`${url}/app/react/brands/save`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+        database:  `${database}`,
     }
   })
 

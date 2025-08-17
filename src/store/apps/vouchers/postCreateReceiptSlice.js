@@ -5,8 +5,9 @@ import notify from 'src/utils/notify'
 
 // Async thunk for storing a receipt
 export const createReceipt = createAsyncThunk('vouchers/createReceipt', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const { values } = payload
   const formData = new FormData()
   // Extract the date components
@@ -49,7 +50,8 @@ export const createReceipt = createAsyncThunk('vouchers/createReceipt', async pa
   const response = await axios.post(`${url}/app/react/voucher/save`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      database:  `${database}`,
     }
   })
 

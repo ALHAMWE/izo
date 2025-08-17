@@ -16,13 +16,15 @@ const initialState = {
 }
 
 export const fetchSearchProductCompo = createAsyncThunk('dashboard/fetchSearchProductCompo', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const { query } = payload
 
   const response = await axios.get(`${url}/app/react/products/search-product?value=${query}`, {
     headers: {
-      Authorization: 'Bearer ' + `${token}`
+      Authorization: 'Bearer ' + `${token}`,
+      database:  `${database}`,
     }
   })
 

@@ -282,15 +282,16 @@ const SidebarEditUser = (props: SidebarAddUserType) => {
 
 
 
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token     = getCookie('token')
+  const url       = getCookie('apiUrl')
+  const database  = getCookie('DatabaseConnection')
 
   useEffect(() => {
-    if (token && url && itemId) {
+    if (token && url && database && itemId) {
       //@ts-ignore
-      dispatch(fetchEditUsers({ token, url, itemId }))
+      dispatch(fetchEditUsers({ token, url, database, itemId }))
     }
-  }, [dispatch, token, url, itemId])
+  }, [dispatch, token, url, database, itemId])
 
 
 

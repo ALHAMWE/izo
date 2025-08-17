@@ -13,9 +13,8 @@ const initialState = {
 
 // Define an async thunk for deleting a user
 export const postDeleteContact = createAsyncThunk('dashboard/postDeleteContact', async payload => {
-  const { id, url } = payload
-    const database = getCookie('DatabaseConnection')
-const token = getCookie('token')
+  const { id, url ,token , database } = payload
+
 
   const axiosInstance = axios.create({
     headers: {

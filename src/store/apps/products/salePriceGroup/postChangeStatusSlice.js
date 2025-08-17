@@ -14,7 +14,8 @@ const initialState = {
 // Define an async thunk for deleting a user
 export const changeStatusSPGroup = createAsyncThunk('dashboard/changeStatusSPGroup', async payload => {
   const { id, token } = payload
-  const url = getCookie('apiUrl')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   const response = await axios.post(
     `${url}/app/react/sales-price-group/active/${id}`,
@@ -22,7 +23,8 @@ export const changeStatusSPGroup = createAsyncThunk('dashboard/changeStatusSPGro
     {
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+      database:  `${database}`,
       }
     }
   )

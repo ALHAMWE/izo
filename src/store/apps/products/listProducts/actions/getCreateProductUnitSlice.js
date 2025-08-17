@@ -16,12 +16,14 @@ const initialState = {
 }
 
 export const fetchCreateProductUnit = createAsyncThunk('dashboard/fetchCreateProductUnit', async () => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   const response = await axios.get(`${url}/app/react/products/unit/create`, {
     headers: {
-      Authorization: 'Bearer ' + `${token}`
+      Authorization: 'Bearer ' + `${token}`,
+      database:  `${database}`,
     }
   })
 

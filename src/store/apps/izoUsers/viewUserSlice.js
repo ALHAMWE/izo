@@ -14,12 +14,13 @@ const initialState = {
 
 export const fetchViewUser = createAsyncThunk('Users/fetchViewUser', async payload => {
   try {
-    const { token, url, id } = payload
+    const { token, url, database, id } = payload
 
-    if (token && url && id) {
+    if (token && url && database && id) {
       const config = {
         headers: {
-          Authorization: `Bearer ${token}` // Send the token as a Bearer Token in the header
+          Authorization: `Bearer ${token}`, // Send the token as a Bearer Token in the header
+          database:`${database}`
         }
       }
       const response = await axios.get(`${url}/app/react/users/view/${id}`, config)

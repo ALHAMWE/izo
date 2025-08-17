@@ -16,13 +16,15 @@ const initialState = {
 
 export const fetchViewStockProduct = createAsyncThunk('dashboard/fetchViewStockProduct', async payload => {
   const { id } = payload
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   try {
     const response = await axios.get(`${url}/app/react/products/view-stock/${id}`, {
       headers: {
-        Authorization: 'Bearer ' + `${token}`
+        Authorization: 'Bearer ' + `${token}`,
+      database:  `${database}`,
       }
     })
 

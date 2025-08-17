@@ -61,6 +61,9 @@ const RowOptions = ({ id }) => {
   const handleRowOptionsClose = () => {
     setAnchorEl(null)
   }
+  const token      = getCookie('token')
+  const url        = getCookie('apiUrl')
+  const database   = getCookie('DatabaseConnection')
 
   const handleDelete = () => {
     if (!id) {
@@ -70,7 +73,7 @@ const RowOptions = ({ id }) => {
       return
     }
 
-    dispatch(deleteContactBank({ id }))
+    dispatch(deleteContactBank({ id, url, token, database }))
       .then(() => {
         dispatch(fetchContactBank())
 

@@ -14,12 +14,14 @@ const initialState = {
 }
 
 export const fetchMapPurchase = createAsyncThunk('dashboard/fetchMapPurchase', async payload => {
-  const url = getCookie('apiUrl')
-  const token = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const database    = getCookie('DatabaseConnection')
   const { id } = payload
   const response = await axios.get(`${url}/app/react/purchase/map/${id}`, {
     headers: {
-      Authorization: 'Bearer ' + `${token}`
+      Authorization: 'Bearer ' + `${token}`,
+      database:  `${database}`,
     }
   })
 

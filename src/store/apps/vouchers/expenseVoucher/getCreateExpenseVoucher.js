@@ -15,11 +15,14 @@ const initialState = {
 }
 
 export const fetchCreateExpenseVoucher = createAsyncThunk('dashboard/fetchCreateExpenseVoucher', async () => {
-  const url = getCookie('apiUrl')
-  const token = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const database    = getCookie('DatabaseConnection')
+
   const response = await axios.get(`${url}/app/react/expense-voucher/create`, {
     headers: {
-      Authorization: 'Bearer ' + `${token}`
+      Authorization: 'Bearer ' + `${token}`,
+      database:  `${database}`,
     }
   })
 

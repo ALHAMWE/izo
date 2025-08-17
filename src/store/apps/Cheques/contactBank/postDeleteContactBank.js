@@ -11,25 +11,25 @@ const initialState = {
   error: null
 }
 
-const token = getCookie('token')
-  const database = getCookie('DatabaseConnection')
+
 
 // const apiUrl = getCookie('apiUrl')
 
 // Create an Axios instance with common headers
-const axiosInstance = axios.create({
-  headers: {
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/json',database : `${database}`
-  }
-})
+
 
 // Define an async thunk for deleting a user
 export const deleteContactBank = createAsyncThunk('dashboard/contactBank/deleteContactBank', async payload => {
-  const url = getCookie('apiUrl')
   try {
-    const { id } = payload
+    const { id, url ,token , database } = payload
 
+    const axiosInstance = axios.create({
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        database : `${database}`
+      }
+    })
     const response = await axiosInstance.post(`${url}/app/react/contact-bank/del/${id}`)
     const data = response.data
     notify(' Contact Bank successfully deleted.', 'success')

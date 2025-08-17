@@ -6,8 +6,9 @@ import notify from 'src/utils/notify'
 import axios from 'axios'
 
 export const deleteBrand = createAsyncThunk('brands/delete', async payload => {
-  const token = getCookie('token')
-  const urlToken = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const urlToken    = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   const url = `${urlToken}/app/react/brands/del/${payload}`
 
@@ -16,7 +17,8 @@ export const deleteBrand = createAsyncThunk('brands/delete', async payload => {
     url: url,
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      database:  `${database}`,
     }
   })
 

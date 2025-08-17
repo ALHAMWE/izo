@@ -42,7 +42,7 @@ export const fetchViewContact = createAsyncThunk('dashboard/fetchViewContact', a
     return convertedDate
   }
   const start_date = convertDateFormat(startDate)
-  const end_date = convertDateFormat(endDate)
+  const end_date   = convertDateFormat(endDate)
 
   try {
     const url = getCookie('apiUrl')

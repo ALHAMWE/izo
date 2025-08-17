@@ -12,8 +12,9 @@ const initialState = {
 }
 
 export const createOpeningStock = createAsyncThunk('products/addOpeningStock/createOpeningStock', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const { values } = payload
 
   // Extract the date components
@@ -42,7 +43,8 @@ export const createOpeningStock = createAsyncThunk('products/addOpeningStock/cre
   const response = await axios.post(`${url}/app/react/opening-quantity/save`, dataToSubmit, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      database:  `${database}`,
     }
   })
 

@@ -5,10 +5,12 @@ import { getCookie } from 'cookies-next'
 // Async thunk for getting all warranties
 export const getAllWarranties = createAsyncThunk('warranties/getAllWarranties', async (_, { rejectWithValue }) => {
   try {
-    const token = getCookie('token')
-    const url = getCookie('apiUrl')
+    const token       = getCookie('token')
+    const url         = getCookie('apiUrl')
+    const database    = getCookie('DatabaseConnection')
     const response = await axios.get(`${url}/app/react/warranties/all`, {
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',
+      database:  `${database}`, }
     })
 
     return response.data

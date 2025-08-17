@@ -5,8 +5,9 @@ import notify from 'src/utils/notify'
 
 // Async Thunk Action for storing user
 export const postEditCategory = createAsyncThunk('dashboard/postEditCategory', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   const { userData, itemId } = payload
 
@@ -32,7 +33,8 @@ export const postEditCategory = createAsyncThunk('dashboard/postEditCategory', a
 
     const headers = {
       Authorization: `Bearer ${token}`, // Include the token in the 'Authorization' header
-      'Content-Type': ' multipart/form-data'
+      'Content-Type': ' multipart/form-data',
+      database:  `${database}`,
     }
 
     const response = await axios.post(`${url}/app/react/category/update/${itemId}`, formData, {

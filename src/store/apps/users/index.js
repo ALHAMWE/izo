@@ -12,7 +12,7 @@ const initialState = {
 
 // const token = getCookie('token')
 const database = getCookie('DatabaseConnection')
-const ApiUrl = getCookie('ApiUrl')
+const ApiUrl   = getCookie('ApiUrl')
 
 // Define an async thunk to fetch data from the API
 export const fetchUsers = createAsyncThunk('users/fetchData', async () => {

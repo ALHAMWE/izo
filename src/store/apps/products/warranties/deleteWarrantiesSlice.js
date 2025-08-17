@@ -4,8 +4,9 @@ import notify from 'src/utils/notify'
 
 // Async thunk for deleting a warranty
 export const deleteWarranty = createAsyncThunk('warranties/deleteWarranty', async id => {
-  const token = getCookie('token')
-  const urlToken = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const urlToken    = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   const url = `${urlToken}/app/react/warranties/del/${id}`
 
@@ -13,7 +14,8 @@ export const deleteWarranty = createAsyncThunk('warranties/deleteWarranty', asyn
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      database:  `${database}`,
     }
   })
 

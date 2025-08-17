@@ -16,14 +16,16 @@ const initialState = {
 }
 
 export const getLastProduct = createAsyncThunk('Product/getLastProduct', async () => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   let mainUrl = `${url}/app/react/opening-quantity/last-product`
 
   try {
     const response = await axios.get(`${mainUrl}`, {
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',
+      database:  `${database}` }
     })
 
     const data = response.data

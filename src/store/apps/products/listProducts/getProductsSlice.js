@@ -17,8 +17,8 @@ const initialState = {
 }
 
 export const fetchProducts = createAsyncThunk('dashboard/fetchProducts', async payload => {
-  const  database = getCookie('DatabaseConnection');
-  const url = getCookie('apiUrl')
+  const url       = getCookie('apiUrl')
+  const database  = getCookie('DatabaseConnection');
   const { token, query } = payload
 
   if (query) {

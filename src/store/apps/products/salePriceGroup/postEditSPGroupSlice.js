@@ -5,8 +5,9 @@ import notify from 'src/utils/notify'
 
 // Async Thunk Action for storing user
 export const postEditSPGroup = createAsyncThunk('dashboard/postEditSPGroup', async payload => {
-  const token = getCookie('token') // Get the token inside the async function
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token') // Get the token inside the async function
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const { itemId, userData } = payload
 
   if (token !== undefined && token !== null && userData !== undefined && userData !== null) {
@@ -20,7 +21,8 @@ export const postEditSPGroup = createAsyncThunk('dashboard/postEditSPGroup', asy
 
     const headers = {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      database:  `${database}`,
     }
 
     const response = await axios.post(`${url}/app/react/sales-price-group/update/${itemId}`, formData, {

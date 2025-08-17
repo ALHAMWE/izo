@@ -137,8 +137,8 @@ import { NextResponse } from 'next/server'
 import { verifyAuth } from './jwt'
 
 const getBaseUrl = req => {
-  const protocol = req.headers.get('x-forwarded-proto') || 'http'
-  const host = req.headers.get('host')
+  const protocol  = req.headers.get('x-forwarded-proto') || 'http'
+  const host      = req.headers.get('host')
 
   // console.log('protocol', protocol)
   // console.log('host', host)
@@ -148,10 +148,11 @@ const getBaseUrl = req => {
 }
 
 const middleware = async req => {
-  const token = req.cookies.get('token')
-  const key = req.cookies.get('key')
-  const url = req.url
-  const validToken = token && key && (await verifyAuth(token, key))
+  const token       = req.cookies.get('token')
+  const key         = req.cookies.get('key')
+  const database    = req.cookies.get('database')
+  const url         = req.url
+  const validToken  = token && key && database && (await verifyAuth(token, key, database))
 
   // Redirect logic
   // ...

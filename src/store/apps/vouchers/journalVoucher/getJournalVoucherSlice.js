@@ -3,8 +3,9 @@ import axios from 'axios'
 import { getCookie } from 'cookies-next'
 
 export const fetchJournalVoucher = createAsyncThunk('journalVoucher/fetchJournalVoucher', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   const { month, week, day, startDate, endDate } = payload
   let mainUrl = `${url}/app/react/journal-voucher/all`
@@ -57,7 +58,8 @@ export const fetchJournalVoucher = createAsyncThunk('journalVoucher/fetchJournal
 
   try {
     const response = await axios.get(`${mainUrl}`, {
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',
+      database:  `${database}`, }
     })
 
     const data = response.data
