@@ -1,20 +1,117 @@
+// import React, { Fragment, useEffect } from 'react'
+// import Lottie from 'lottie-react'
+// import successAnimation from '/src/animation/successAnimation.json'
+// import errorA from '/src/animation/errorA.json'
+// import { Dialog, DialogContent, Grid } from '@mui/material'
+// import { Typography } from '@mui/material'
+// import Image from 'next/image'
+// import { useTheme } from '@mui/material/styles'
+// import ProgressCustomization from 'src/views/components/progress/ProgressCircularCustomization'
+// import { Box } from '@mui/system'
+
+// // ** UseRouter
+// import { useRouter } from 'next/router'
+
+// const LoadingAnimation = ({ open, onClose, statusType, redirectURL = null }) => {
+//   const theme = useTheme()
+//   const router = useRouter()
+//   useEffect(() => {
+//     if (statusType.success || statusType.error) {
+//       setTimeout(onClose, 2000)
+//     }
+//   }, [statusType.success, statusType.error, onClose])
+
+//   useEffect(() => {
+//     if (statusType.success && redirectURL) {
+//       router.push(redirectURL)
+//     }
+//   }, [statusType.success, redirectURL, router])
+
+//   return (
+//     <Fragment>
+//       <Dialog open={open} onClose={onClose} fullWidth maxWidth='xs' scroll='body'>
+//         <DialogContent
+//           sx={{
+//             width: '100%',
+//             pt: 0,
+//             height: '100%'
+//           }}
+//         >
+//           <Image src={`/izoLogo/izo-logo-${theme.palette.mode}.png`} alt='Logo' width={60} height={60} />
+
+//           <Box>
+//             <Grid>
+//               <Box
+//                 sx={{
+//                   display: 'flex',
+//                   flexWrap: 'wrap',
+//                   alignItems: 'center',
+//                   justifyContent: 'center',
+//                   flexDirection: 'column'
+//                 }}
+//               >
+//                 {statusType.loading ? (
+//                   <Box>
+//                     <ProgressCustomization />
+//                   </Box>
+//                 ) : statusType.success ? (
+//                   <Lottie
+//                     animationData={successAnimation}
+//                     style={{
+//                       width: '60px',
+//                       height: '60px'
+//                     }}
+//                   />
+//                 ) : statusType.error ? (
+//                   <Lottie
+//                     animationData={errorA}
+//                     style={{
+//                       padding: 0,
+//                       margin: 0,
+//                       width: '60px',
+//                       height: '60px'
+//                     }}
+//                   />
+//                 ) : null}
+
+//                 <Typography variant='body6'>
+//                   {statusType.loading ? (
+//                     <span>Loading...</span>
+//                   ) : statusType.success ? (
+//                     <span>Success 🎉✨</span>
+//                   ) : statusType.error ? (
+//                     <span>Error ❌</span>
+//                   ) : null}
+//                 </Typography>
+//               </Box>
+//             </Grid>
+//           </Box>
+//         </DialogContent>
+//       </Dialog>
+//     </Fragment>
+//   )
+// }
+
+// export default LoadingAnimation
+
 import React, { Fragment, useEffect } from 'react'
-import Lottie from 'lottie-react'
+import dynamic from 'next/dynamic'
 import successAnimation from '/src/animation/successAnimation.json'
 import errorA from '/src/animation/errorA.json'
-import { Dialog, DialogContent, Grid } from '@mui/material'
-import { Typography } from '@mui/material'
+import { Dialog, DialogContent, Grid, Typography } from '@mui/material'
 import Image from 'next/image'
 import { useTheme } from '@mui/material/styles'
 import ProgressCustomization from 'src/views/components/progress/ProgressCircularCustomization'
 import { Box } from '@mui/system'
-
-// ** UseRouter
 import { useRouter } from 'next/router'
+
+// Dynamically import lottie-react to avoid SSR crash
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
 const LoadingAnimation = ({ open, onClose, statusType, redirectURL = null }) => {
   const theme = useTheme()
   const router = useRouter()
+
   useEffect(() => {
     if (statusType.success || statusType.error) {
       setTimeout(onClose, 2000)
@@ -30,13 +127,7 @@ const LoadingAnimation = ({ open, onClose, statusType, redirectURL = null }) => 
   return (
     <Fragment>
       <Dialog open={open} onClose={onClose} fullWidth maxWidth='xs' scroll='body'>
-        <DialogContent
-          sx={{
-            width: '100%',
-            pt: 0,
-            height: '100%'
-          }}
-        >
+        <DialogContent sx={{ width: '100%', pt: 0, height: '100%' }}>
           <Image src={`/izoLogo/izo-logo-${theme.palette.mode}.png`} alt='Logo' width={60} height={60} />
 
           <Box>
@@ -55,26 +146,12 @@ const LoadingAnimation = ({ open, onClose, statusType, redirectURL = null }) => 
                     <ProgressCustomization />
                   </Box>
                 ) : statusType.success ? (
-                  <Lottie
-                    animationData={successAnimation}
-                    style={{
-                      width: '60px',
-                      height: '60px'
-                    }}
-                  />
+                  <Lottie animationData={successAnimation} style={{ width: 60, height: 60 }} />
                 ) : statusType.error ? (
-                  <Lottie
-                    animationData={errorA}
-                    style={{
-                      padding: 0,
-                      margin: 0,
-                      width: '60px',
-                      height: '60px'
-                    }}
-                  />
+                  <Lottie animationData={errorA} style={{ width: 60, height: 60 }} />
                 ) : null}
 
-                <Typography variant='body6'>
+                <Typography variant='body2'>
                   {statusType.loading ? (
                     <span>Loading...</span>
                   ) : statusType.success ? (
