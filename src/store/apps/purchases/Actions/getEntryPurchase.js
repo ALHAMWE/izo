@@ -4,11 +4,13 @@ import { getCookie } from 'cookies-next'
 
 // Async thunk for fetching the data
 export const fetchEntryPurchase = createAsyncThunk('purchase/entry', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const { id } = payload
   const response = await axios.get(`${url}/app/react/purchase/entry/${id}`, {
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' ,
+      database:  `${database}`,}
   })
 
   return response.data

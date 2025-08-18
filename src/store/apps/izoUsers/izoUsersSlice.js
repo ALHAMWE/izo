@@ -14,12 +14,13 @@ const initialState = {
 }
 
 export const fetchIzoUsers = createAsyncThunk('dashboard/fetchIzoUsers', async payload => {
-  const { token, url } = payload
+  const { token, url, database } = payload
 
   try {
     const response = await axios.get(`${url}/app/react/users`, {
       headers: {
-        Authorization: 'Bearer ' + `${token}`
+        Authorization: 'Bearer ' + `${token}`,
+        database: `${database}`,
       }
     })
 

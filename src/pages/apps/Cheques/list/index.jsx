@@ -86,7 +86,7 @@ const renderClient = row => {
 
 // ** Row options
 
-const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
+const RowOptions = ({ id, statusName, attach, dueDate, editType }) => {
   // ** Hooks
   const dispatch = useDispatch()
   console.log('Status Name =>', statusName)
@@ -174,10 +174,10 @@ const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
           })
             .then(response => {
               const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
-              const link = documents.createElement('a')
+              const link = document.createElement('a')
               link.href = url
               link.setAttribute('download', 'voucher.pdf') //or any other extension
-              documents.body.appendChild(link)
+              document.body.appendChild(link)
               link.click()
               link.remove();
               window.URL.revokeObjectURL(url);
@@ -296,6 +296,7 @@ const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
           <Icon icon='bx:show' fontSize={20} />
           View
         </MenuItem>
+
         {statusName === 'write' || statusName === 'Un Collect' || statusName === 'Delete Collect' ? (
           <MenuItem
             sx={{ '& svg': { mr: 2 }, textTransform: transText }}
@@ -360,7 +361,7 @@ const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
           </MenuItem>
         )}
 
-        {/* print */}
+        print
         <MenuItem
           onClick={() => {
             handleRowOptionsClose()
@@ -373,7 +374,7 @@ const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
         </MenuItem>
 
         {/* attachments */}
-        {documents && documents.length > 0 ? (
+        {attach && attach.length > 0 ? (
           <MenuItem
             onClick={() => {
               handleRowOptionsClose()
@@ -466,6 +467,7 @@ const RowOptions = ({ id, statusName, documents, dueDate, editType }) => {
       {openEntry && (
         <EntryPopUp open={openEntry} toggle={setOpenEntry} itemId={id} name={'getEntryCheques'} type={'cheque'} />
       )}
+
       {openCollect && (
         <DropDownAccounts
           open={openCollect}
@@ -504,6 +506,7 @@ const ChequesList = () => {
   const title = 'Cheques List'
   const transText = getCookie('fontStyle')
   const FilterInitial = getCookie('FilterInitial')
+
   const columns = [
     {
       flex: 0.1,
@@ -517,7 +520,7 @@ const ChequesList = () => {
           editType={row.type}
           statusName={row.status_name}
           account_id={row.account_id}
-          documents={row.document}
+          attach={row.attach}
           dueDate={row.due_date}
         />
       )

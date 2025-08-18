@@ -3,10 +3,12 @@ import { getCookie } from 'cookies-next'
 
 // Async thunk for fetching brand details
 export const fetchBrandDetails = createAsyncThunk('brandDetails/fetch', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const response = await fetch(`${url}/app/react/brands/edit/` + payload, {
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' ,
+        database:  `${database}`,}
   })
 
   if (!response.ok) {

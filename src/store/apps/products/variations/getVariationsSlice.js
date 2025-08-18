@@ -18,11 +18,13 @@ export const fetchVariations = createAsyncThunk('dashboard/fetchVariations', asy
   const { token } = payload
 
   try {
-    const url = getCookie('apiUrl')
+    const url         = getCookie('apiUrl')
+    const database    = getCookie('DatabaseConnection')
     const cookieToken = getCookie('token')
     const response = await axios.get(`${url}/app/react/variations/all`, {
       headers: {
-        Authorization: 'Bearer ' + `${token || cookieToken}`
+        Authorization: 'Bearer ' + `${token || cookieToken}`,
+      database:  `${database}`,
       }
     })
 

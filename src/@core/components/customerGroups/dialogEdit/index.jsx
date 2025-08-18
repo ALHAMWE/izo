@@ -54,7 +54,7 @@ const DialogEdit = ({ openEdit, setOpenEdit, itemId }) => {
   useEffect(() => {
     if (token && url && database && itemId) {
       //@ts-ignore
-      dispatch(fetchEditCustomerGroup({ token, url, itemId }))
+      dispatch(fetchEditCustomerGroup({ token, url, database, itemId }))
     }
   }, [dispatch, token, url,database, itemId])
 

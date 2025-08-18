@@ -286,17 +286,18 @@ const StepperStoreUser = ({ isEdit, itemId }: any) => {
 
   // ===================== handle part for edit user ===========================
   // ===========================================================================
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
 
 
   useEffect(() => {
-    if (token && url && itemId) {
+    if (token && url && database && itemId) {
       //@ts-ignore
-      isEdit ? dispatch(fetchEditUsers({ token, url, itemId })) : resetForm()
+      isEdit ? dispatch(fetchEditUsers({ token, url, database, itemId })) : resetForm()
     }
-  }, [dispatch, token, url, itemId , isEdit])
+  }, [dispatch, token, url, database, itemId , isEdit])
 
   const editData = useSelector((state: { editUsers: { data: any } }) => state.editUsers.data)
 

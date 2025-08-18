@@ -117,8 +117,9 @@ const RowOptions = ({ id, type }) => {
 
   // ** Cookies
 
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token      = getCookie('token')
+  const url        = getCookie('apiUrl')
+  const database   = getCookie('DatabaseConnection')
 
   const handleRowOptionsClick = event => {
     setAnchorEl(event.currentTarget)
@@ -136,7 +137,7 @@ const RowOptions = ({ id, type }) => {
       return
     }
 
-    dispatch(postDeleteContact({ id, url }))
+    dispatch(postDeleteContact({ id, url, token, database }))
       .then(() => {
         dispatch(fetchSuppliers(token, url))
 

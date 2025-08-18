@@ -7,8 +7,9 @@ import notify from 'src/utils/notify'
 // ** Async thunk for storing a receipt
 export const updatePurchase = createAsyncThunk('Purchases/updatePurchase', async payload => {
   // ** Get the token and url from the cookie
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   // ** Destruct the payload
   const { values, id } = payload
@@ -195,7 +196,8 @@ export const updatePurchase = createAsyncThunk('Purchases/updatePurchase', async
     const response = await axios.post(`${url}/app/react/purchase/update/${id}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+      database:  `${database}`,
       }
     })
 

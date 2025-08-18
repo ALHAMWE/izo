@@ -13,9 +13,9 @@ const initialState = {
 export const fetchContactData = createAsyncThunk(
   'contactEdit/fetchContactData',
   async (contactId, { rejectWithValue }) => {
-    const database = getCookie('DatabaseConnection')
-    const token = getCookie('token')
-    const url = getCookie('apiUrl')
+    const database  = getCookie('DatabaseConnection')
+    const token     = getCookie('token')
+    const url       = getCookie('apiUrl')
     try {
       const response = await axios.get(`${url}/app/react/contact/edit/${contactId.itemId}`, {
         headers: {

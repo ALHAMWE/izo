@@ -6,10 +6,12 @@ import notify from 'src/utils/notify'
 // Async thunk for storing a warranty
 export const storeWarranty = createAsyncThunk('warranties/storeWarranty', async (warranty, { rejectWithValue }) => {
   try {
-    const token = getCookie('token')
-    const url = getCookie('apiUrl')
+    const token       = getCookie('token')
+    const url         = getCookie('apiUrl')
+    const database    = getCookie('DatabaseConnection')
     const response = await axios.post(`${url}/app/react/warranties/save`, warranty, {
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json',
+      database:  `${database}`, }
     })
 
     return response.data

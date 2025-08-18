@@ -3,14 +3,16 @@ import axios from 'axios'
 import { getCookie } from 'cookies-next'
 
 export const getLastSupplierAdded = createAsyncThunk('purchases/getLastSupplierAdded', async () => {
-  const token = getCookie('token')
-  const URL = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const URL         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   try {
     const response = await axios.get(`${URL}/app/react/purchase/supplier-last`, {
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+      database:  `${database}`,
       }
     })
 

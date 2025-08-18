@@ -6,10 +6,9 @@ import notify from 'src/utils/notify'
 
 // Async Thunk Action for storing user
 export const postAddCustomerGroup = createAsyncThunk('dashboard/postAddCustomerGroup', async userData => {
-  const url = getCookie('apiUrl')
-  const database = getCookie('DatabaseConnection')
-
-  const token = getCookie('token')
+  const url       = getCookie('apiUrl')
+  const token     = getCookie('token')
+  const database  = getCookie('DatabaseConnection')
 
   const headers = {
     Authorization: `Bearer ${token}`, // Include the token in the 'Authorization' header

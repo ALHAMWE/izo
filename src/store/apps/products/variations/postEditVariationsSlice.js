@@ -5,7 +5,8 @@ import notify from 'src/utils/notify'
 
 // Async Thunk Action for storing user
 export const postEditVariations = createAsyncThunk('dashboard/postEditVariations', async payload => {
-  const token = getCookie('token') // Get the token inside the async function
+  const token       = getCookie('token') // Get the token inside the async function
+  const database    = getCookie('DatabaseConnection')
   const { id, userData, oldList } = payload
 
   if (
@@ -40,7 +41,8 @@ export const postEditVariations = createAsyncThunk('dashboard/postEditVariations
 
     const headers = {
       Authorization: `Bearer ${token}`, // Include the token in the 'Authorization' header
-      'Content-Type': ' multipart/form-data'
+      'Content-Type': ' multipart/form-data',
+      database:  `${database}`,
     }
 
     const response = await axios.post(`https://test.izocloud.net/api/app/react/variations/update/${id}`, formData, {

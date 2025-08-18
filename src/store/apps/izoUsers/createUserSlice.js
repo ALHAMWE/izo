@@ -13,21 +13,23 @@ const initialState = {
   error: null
 }
 
-const token = getCookie('token')
-const url = getCookie('apiUrl')
+const token       = getCookie('token')
+const url         = getCookie('apiUrl')
+const database    = getCookie('DatabaseConnection')
 
 export const fetchCreateUsers = createAsyncThunk('users/fetchCreateUsers', async () => {
   try {
     if (token && url) {
       const config = {
         headers: {
-          Authorization: `Bearer ${token}` // Send the token as a Bearer Token in the header
+          Authorization: `Bearer ${token}`, // Send the token as a Bearer Token in the header
+          database: `${database}`, // Send the token as a Bearer Token in the header
         }
       }
 
       const response = await axios.get(`${url}/app/react/users/create`, config)
 
-      const data = response.data
+      const data     = response.data
 
       return data
     }

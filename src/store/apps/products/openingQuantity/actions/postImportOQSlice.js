@@ -5,8 +5,9 @@ import notify from 'src/utils/notify'
 
 // Async Thunk Action for storing user
 export const postImportOQ = createAsyncThunk('dashboard/postImportOQ', async payload => {
-  const token = getCookie('token') // Get the token inside the async function
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token') // Get the token inside the async function
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const { data } = payload
 
   if (token !== undefined && token !== null && data !== undefined && data !== null) {
@@ -16,7 +17,8 @@ export const postImportOQ = createAsyncThunk('dashboard/postImportOQ', async pay
 
     const headers = {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      database:  `${database}`,
     }
 
     const response = await axios.post(`${url}/app/react/opening-quantity/import-file`, formData, {

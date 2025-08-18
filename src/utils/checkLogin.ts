@@ -7,12 +7,12 @@ import { RootState } from 'src/types/apps/rooteState'
 import { getCookies } from 'cookies-next'
 
 export function useNavigateToDashboardAnalysisIfTokenMatches() {
-  const dispatch = useDispatch()
-  const router = useRouter()
-  const id = useSelector((state: RootState) => state.login.data.authorization?.user?.id)
-  const first_name = useSelector((state: RootState) => state.login.data.authorization?.user?.first_name)
+  const dispatch          = useDispatch()
+  const router            = useRouter()
+  const id                = useSelector((state: RootState) => state.login.data.authorization?.user?.id)
+  const first_name        = useSelector((state: RootState) => state.login.data.authorization?.user?.first_name)
 
-  const login_first_time = useSelector((state: RootState) => state.login.login_first_time)
+  const login_first_time  = useSelector((state: RootState) => state.login.login_first_time)
   console.log('id,first_name', id, first_name)
 
   useEffect(() => {

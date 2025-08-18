@@ -5,8 +5,9 @@ import axios from 'axios'
 
 export const updateBrand = createAsyncThunk('brands/update', async brand => {
   const { updateData, id } = brand
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const formData = new FormData()
   formData.append('name', updateData.name)
   formData.append('description', updateData.description)
@@ -22,7 +23,8 @@ export const updateBrand = createAsyncThunk('brands/update', async brand => {
   const response = await axios.post(`${url}/app/react/brands/update/${id}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      database:  `${database}`,
     }
   })
 

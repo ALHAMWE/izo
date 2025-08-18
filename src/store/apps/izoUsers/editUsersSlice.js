@@ -14,12 +14,13 @@ const initialState = {
 
 export const fetchEditUsers = createAsyncThunk('dashboard/fetchEditUsers', async payload => {
   try {
-    const { token, url, itemId } = payload
+    const { token, url, database, itemId } = payload
 
-    if (token && url && itemId) {
+    if (token && url && database && itemId) {
       const config = {
         headers: {
-          Authorization: `Bearer ${token}` // Send the token as a Bearer Token in the header
+          Authorization: `Bearer ${token}`, // Send the token as a Bearer Token in the header
+          database: `${database}`,
         }
       }
 

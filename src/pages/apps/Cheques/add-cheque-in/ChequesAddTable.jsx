@@ -48,9 +48,9 @@ const ChequesAddTable = ({ values, handleChange, remove, setFieldValue, push }) 
   const [rows, setRows] = useState([])
   // const [oldBackPayment, setOldBackPayment] = useState(0)
 
-  const transText = getCookie('fontStyle')
-  const decimalFormat = getCookie('DecimalFormat')
-  const currency_code = getCookie('currency_code')
+  const transText               = getCookie('fontStyle')
+  const decimalFormat           = getCookie('DecimalFormat')
+  const currency_code           = getCookie('currency_code')
   const CurrencySymbolPlacement = getCookie('CurrencySymbolPlacement')
 
   const columns = [

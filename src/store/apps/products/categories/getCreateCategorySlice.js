@@ -15,13 +15,15 @@ const initialState = {
 }
 
 export const fetchCreateCategory = createAsyncThunk('dashboard/fetchCreateCategory', async () => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   try {
     const response = await axios.get(`${url}/app/react/category/create`, {
       headers: {
-        Authorization: 'Bearer ' + `${token}`
+        Authorization: 'Bearer ' + `${token}`,
+        database:  `${database}`,
       }
     })
 

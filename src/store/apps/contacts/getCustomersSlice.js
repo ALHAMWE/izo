@@ -16,9 +16,9 @@ const initialState = {
 
 export const fetchCustomers = createAsyncThunk('dashboard/fetchCustomers', async token => {
   try {
-    const database = getCookie('DatabaseConnection')
-    const url = getCookie('apiUrl')
-    const response = await axios.get(`${url}/app/react/contact/customer`, {
+    const url       = getCookie('apiUrl')
+    const database  = getCookie('DatabaseConnection')
+    const response  = await axios.get(`${url}/app/react/contact/customer`, {
       headers: {
         Authorization: 'Bearer ' + `${token}`,
         database:   `${database}`

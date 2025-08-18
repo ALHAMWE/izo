@@ -4,8 +4,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-// ** Next Imports
-import { getCookie } from 'cookies-next'
 // Define the initial state
 const initialState = {
   data: null,
@@ -15,12 +13,12 @@ const initialState = {
 }
 
 
-const database = getCookie('DatabaseConnection')
 
 export const fetchDataAnalytics = createAsyncThunk('dashboard/fetchData', async payload => {
   try {
-    const { token, url,  typeofData } = payload
-    if (token && url   ) {
+    const { token, url, database,  typeofData } = payload
+
+    if (token && url && database  ) {
       const response = await axios.get(`${url}/app/react/dashboard?token="${token}"&date_type=${typeofData}`, {
         headers: {
           Authorization: 'Bearer ' + `${token}`,

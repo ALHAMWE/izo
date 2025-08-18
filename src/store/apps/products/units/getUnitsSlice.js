@@ -17,12 +17,14 @@ const initialState = {
 }
 
 export const fetchUnits = createAsyncThunk('dashboard/fetchUnits', async payload => {
-  const url = getCookie('apiUrl')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const { token } = payload
 
   const response = await axios.get(`${url}/app/react/units/all`, {
     headers: {
-      Authorization: 'Bearer ' + `${token}`
+      Authorization: 'Bearer ' + `${token}`,
+      database:  `${database}`,
     }
   })
 

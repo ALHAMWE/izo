@@ -2,7 +2,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import notify from 'src/utils/notify'
-import { getCookie } from 'cookies-next'
 
 // Define the initial state
 const initialState = {
@@ -13,9 +12,8 @@ const initialState = {
 
 // Define an async thunk for deleting a user
 export const postDeleteContact = createAsyncThunk('dashboard/postDeleteContact', async payload => {
-  const { id, url } = payload
-    const database = getCookie('DatabaseConnection')
-const token = getCookie('token')
+  const { id, url ,token , database } = payload
+
 
   const axiosInstance = axios.create({
     headers: {

@@ -17,11 +17,13 @@ const initialState = {
 }
 
 export const fetchExportSPGroup = createAsyncThunk('dashboard/fetchExportSPGroup', async token => {
-  const url = getCookie('apiUrl')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   const response = await axios.get(`${url}/app/react/sales-price-group/export`, {
     headers: {
-      Authorization: 'Bearer ' + `${token}`
+      Authorization: 'Bearer ' + `${token}`,
+      database:  `${database}`,
     }
   })
 

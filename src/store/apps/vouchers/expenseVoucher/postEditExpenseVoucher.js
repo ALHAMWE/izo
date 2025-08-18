@@ -6,8 +6,9 @@ import { getCookie } from 'cookies-next'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const editExpenseVoucher = createAsyncThunk('/dashboard/vouchers/expense-voucher/edit', async payload => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
   const { values, id } = payload
 
   // Extract the date components
@@ -63,7 +64,8 @@ export const editExpenseVoucher = createAsyncThunk('/dashboard/vouchers/expense-
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      database:  `${database}`,
     }
   }
   try {

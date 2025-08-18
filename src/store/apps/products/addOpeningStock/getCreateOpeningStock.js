@@ -15,13 +15,15 @@ const initialState = {
 }
 
 export const fetchCreateOpeningStock = createAsyncThunk('dashboard/fetchCreateOpeningStock', async () => {
-  const token = getCookie('token')
-  const url = getCookie('apiUrl')
+  const token      = getCookie('token')
+  const url        = getCookie('apiUrl')
+  const database   = getCookie('DatabaseConnection')
 
   try {
     const response = await axios.get(`${url}/app/react/opening-quantity/create`, {
       headers: {
-        Authorization: 'Bearer ' + `${token}`
+        Authorization: 'Bearer ' + `${token}`,
+        database:  `${database}`,
       }
     })
 

@@ -15,12 +15,14 @@ const initialState = {
 }
 
 export const ViewJournalVoucher = createAsyncThunk('dashboard/ViewJournalVoucher', async payload => {
-  const url = getCookie('apiUrl')
-  const token = getCookie('token')
+  const url         = getCookie('apiUrl')
+  const token       = getCookie('token')
+  const database    = getCookie('DatabaseConnection')
   const { id } = payload
   const response = await axios.get(`${url}/app/react/journal-voucher/view/${id}`, {
     headers: {
-      Authorization: 'Bearer ' + `${token}`
+      Authorization: 'Bearer ' + `${token}`,
+      database:  `${database}`,
     }
   })
 

@@ -5,8 +5,9 @@ import notify from 'src/utils/notify'
 
 // Async Thunk Action for storing user
 export const postAddUnit = createAsyncThunk('dashboard/postAddUnit', async userData => {
-  const token = getCookie('token') // Get the token inside the async function
-  const url = getCookie('apiUrl')
+  const token       = getCookie('token') // Get the token inside the async function
+  const url         = getCookie('apiUrl')
+  const database    = getCookie('DatabaseConnection')
 
   if (token !== undefined && token !== null && userData !== undefined && userData !== null) {
     const formData = new FormData()
@@ -22,7 +23,8 @@ export const postAddUnit = createAsyncThunk('dashboard/postAddUnit', async userD
 
     const headers = {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      database:  `${database}`,
     }
 
     const response = await axios.post(`${url}/app/react/units/save`, formData, {
