@@ -88,7 +88,7 @@ const LoginFirstTime = () => {
 
   //@ts-ignore
   const statusCode = useSelector(state => state.loginFirstTime.statusCode)
-  const router = useRouter()
+  const router     = useRouter()
 
   useEffect(() => {
     if (statusCode === 200 ) { router.replace("/login") }
