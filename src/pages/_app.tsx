@@ -138,88 +138,88 @@ const App = (props: ExtendedAppProps) => {
 
 
   return (
-    <></>
-    // <Provider store={store}>
-    //   <CacheProvider value={emotionCache}>
 
-    // <Global
-    //       styles={css`
-    //         ::selection {
-    //           background-color: ${themeColor} ;
-    //         }
-    //           text-transform: ${fontStyle} !important;
-    //         ::-moz-selection {
-    //           background-color: ${themeColor} ;
-    //         }
-    //         input:-webkit-autofill,
-    //           input:-webkit-autofill:hover,
-    //           input:-webkit-autofill:focus,
-    //           textarea:-webkit-autofill,
-    //           textarea:-webkit-autofill:hover,
-    //           textarea:-webkit-autofill:focus,
-    //           select:-webkit-autofill,
-    //           select:-webkit-autofill:hover,
-    //           select:-webkit-autofill:focus {
+    <Provider store={store}>
+      <CacheProvider value={emotionCache}>
 
-    //             -webkit-box-shadow: 0 0 0px 1000px ${themeColor} inset !important;
-    //             transition: background-color 5000s ease-in-out 0s;
-    //           }
+    <Global
+          styles={css`
+            ::selection {
+              background-color: ${themeColor} ;
+            }
+              text-transform: ${fontStyle} !important;
+            ::-moz-selection {
+              background-color: ${themeColor} ;
+            }
+            input:-webkit-autofill,
+              input:-webkit-autofill:hover,
+              input:-webkit-autofill:focus,
+              textarea:-webkit-autofill,
+              textarea:-webkit-autofill:hover,
+              textarea:-webkit-autofill:focus,
+              select:-webkit-autofill,
+              select:-webkit-autofill:hover,
+              select:-webkit-autofill:focus {
 
-    //           /* Custom scrollbar styles */
-    // ::-webkit-scrollbar {
-    //   width: 8px; /* Width of the scrollbar */
+                -webkit-box-shadow: 0 0 0px 1000px ${themeColor} inset !important;
+                transition: background-color 5000s ease-in-out 0s;
+              }
 
-    //   height: 8px;
-    // }
-    // ::-webkit-scrollbar-track {
-    //   background: 'transparent'; /* Color of the track */
-    //    border-radius: 10px;
-    // }
-    // ::-webkit-scrollbar-thumb {
-    //    background: ${mainColor}; /* Color of the scroll thumb on hover */
+              /* Custom scrollbar styles */
+    ::-webkit-scrollbar {
+      width: 8px; /* Width of the scrollbar */
 
-    //    border-radius: 10px;
-    // }
-    // ::-webkit-scrollbar-thumb:hover {
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: 'transparent'; /* Color of the track */
+       border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+       background: ${mainColor}; /* Color of the scroll thumb on hover */
 
-    //    background: ${mainColor}; /* Color of the scroll thumb */
-    // }
+       border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
 
-
-    //       `}
-    //     />
+       background: ${mainColor}; /* Color of the scroll thumb */
+    }
 
 
-    //     <Head>
-    //       <title>{`${themeConfig.templateName}`}</title>
-    //       <meta name='description' content={`${themeConfig.templateName} – IZO Admin Dashboard`} />
-    //       <meta name='keywords' content='IZO, ERP, Admin Template, ERP Admin ' />
-    //       <meta name='viewport' content='initial-scale=1, width=device-width' />
-    //     </Head>
+          `}
+        />
 
-    //     {/* <AuthProvider> */}
-    //     <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
-    //       <SettingsConsumer>
-    //         {({ settings }) => {
-    //           return (
-    //             <ThemeComponent settings={settings} >
-    //               {/* <Guard authGuard={authGuard} guestGuard={guestGuard}>
-    //                   <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard} authGuard={authGuard}></AclGuard>
-    //                 </Guard> */}
 
-    //               {getLayout(<Component {...pageProps}  />)}
-    //               <ReactHotToast>
-    //                 <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
-    //               </ReactHotToast>
-    //             </ThemeComponent>
-    //           )
-    //         }}
-    //       </SettingsConsumer>
-    //     </SettingsProvider>
-    //     {/* </AuthProvider> */}
-    //   </CacheProvider>
-    //   <ToastContainer />
-    // </Provider>
+        <Head>
+          <title>{`${themeConfig.templateName}`}</title>
+          <meta name='description' content={`${themeConfig.templateName} – IZO Admin Dashboard`} />
+          <meta name='keywords' content='IZO, ERP, Admin Template, ERP Admin ' />
+          <meta name='viewport' content='initial-scale=1, width=device-width' />
+        </Head>
+
+        {/* <AuthProvider> */}
+        <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
+          <SettingsConsumer>
+            {({ settings }) => {
+              return (
+                <ThemeComponent settings={settings} >
+                  {/* <Guard authGuard={authGuard} guestGuard={guestGuard}>
+                      <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard} authGuard={authGuard}></AclGuard>
+                    </Guard> */}
+
+                  {getLayout(<Component {...pageProps}  />)}
+                  <ReactHotToast>
+                    <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+                  </ReactHotToast>
+                </ThemeComponent>
+              )
+            }}
+          </SettingsConsumer>
+        </SettingsProvider>
+        {/* </AuthProvider> */}
+      </CacheProvider>
+      <ToastContainer />
+    </Provider>
   )
 }
 
