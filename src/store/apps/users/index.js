@@ -11,13 +11,14 @@ const initialState = {
 }
 
 // const token = getCookie('token')
-const database = getCookie('DatabaseConnection')
-const ApiUrl   = getCookie('ApiUrl')
+const database = getCookie('DatabaseConnection') || 'esai'
+const ApiUrl   = getCookie('ApiUrl') || 'https://izocloud.com'
 
 // Define an async thunk to fetch data from the API
-export const fetchUsers = createAsyncThunk('users/fetchData', async () => {
+export const fetchUsers = createAsyncThunk('users/fetchData', async (payload) => {
   try {
-    const response = await axios.get(`${ApiUrl}/app/react/get-user`, {
+    const {apiUrl} = payload;
+    const response = await axios.get(`${apiUrl}/app/react/get-user`, {
       headers: {
         // Authorization: 'Bearer ' + `${token}`,
         database:`${database}`,

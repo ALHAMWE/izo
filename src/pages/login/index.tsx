@@ -114,7 +114,7 @@ export async function getStaticProps() {
     const ApiUrl   = getCookie('ApiUrl') || 'https://izocloud.com/api';
 
     const database = getCookie('DatabaseConnection') || 'esai'
-    console.log(" eb developer");
+
     const response = await axios.get(`${ApiUrl}/app/react/get-user`, {
       headers: {
           database:`${database}`,
