@@ -12,7 +12,7 @@ const initialState = {
 
 // const token = getCookie('token')
 const database = getCookie('DatabaseConnection') || 'esai'
-const ApiUrl   = getCookie('ApiUrl') || 'https://izocloud.com'
+// const ApiUrl   = getCookie('ApiUrl') || 'https://izocloud.com'
 
 // Define an async thunk to fetch data from the API
 export const fetchUsers = createAsyncThunk('users/fetchData', async (payload) => {
