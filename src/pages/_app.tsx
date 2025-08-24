@@ -132,6 +132,7 @@ const App = (props: ExtendedAppProps) => {
 
   // const aclAbilities = Component.acl ?? defaultACLObj
 
+  console.log('setConfig  🤩', setConfig)
   console.log('theme color 👁‍🗨👁‍🗨 🤩🤩', themeColor)
   console.log('theme color from _app 🤍 👁‍🗨👁‍🗨', theme.palette.primary.main)
   console.log('font style **,',fontStyle)
