@@ -78,13 +78,13 @@ interface FormData {
 const LoginFirstTime = () => {
   // ** States
   const [showPassword, setShowPassword] = useState<boolean>(false)
-  const [password, setPassword] = useState('')
-  const [userName, setUserName] = useState('')
+  const [password, setPassword]         = useState('')
+  const [userName, setUserName]         = useState('')
 
   // const [confirmPassword, setConfirmPassword] = useState('')
   const [userNameError, setUserNameError] = useState<string>('')
   const [passwordError, setPasswordError] = useState<string>('')
-  const dispatch = useDispatch()
+  const dispatch                          = useDispatch()
 
   //@ts-ignore
   const statusCode = useSelector(state => state.loginFirstTime.statusCode)

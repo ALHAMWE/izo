@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { setCookie } from 'cookies-next'
-// import { fetchUsers } from 'src/store/apps/users'
+import { fetchUsers } from 'src/store/apps/users'
 import axios from 'axios'
 import { getCookie } from 'cookies-next'
 
