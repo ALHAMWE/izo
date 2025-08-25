@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { setCookie } from 'cookies-next'
-import { fetchUsers } from 'src/store/apps/users'
+// import { fetchUsers } from 'src/store/apps/users'
 import axios from 'axios'
 import { getCookie } from 'cookies-next'
 
@@ -170,13 +170,13 @@ const LoginPage: React.FC<{ userData: UserData }> & {
   const successLogin = useSelector((state: RootState) => state.login.data.authorization?.success)
 
   // **useEffect
-  useEffect(() => {
-    //fetching users
-    //@ts-ignore
-    dispatch(fetchUsers())
+  // useEffect(() => {
+  //   //fetching users
+  //   //@ts-ignore
+  //   dispatch(fetchUsers())
 
 
-  }, [dispatch])
+  // }, [dispatch])
 
   useEffect(() => {
     if (successLogin) {
