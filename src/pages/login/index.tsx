@@ -148,35 +148,35 @@ const LoginPage: React.FC<{ userData: UserData }> & {
   guestGuard?: boolean
 } = () => {
 
-  const router = useRouter()
-  const secretKey = "izo-"
-  const [rememberMe, setRememberMe] = useState<boolean>(true)
-  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const router                                              = useRouter()
+  const secretKey                                           = "izo-"
+  const [rememberMe, setRememberMe]                         = useState<boolean>(true)
+  const [showPassword, setShowPassword]                     = useState<boolean>(false)
   const [LogoutFromOtherDevices, setLogoutFromOtherDevices] = useState<boolean>(true)
-  const [password, setPassword] = useState<string>('')
-  const [username, setUserName] = useState<string>('')
-  const [chooseTypeInputName, setChooseTypeInputName] = useState<string>("true")
-  const [Language, setLanguage] = useState<string>('')
-  const [userNameError, setUserNameError] = useState<string>('')
-  const [passwordError, setPasswordError] = useState<string>('')
-  const [successAuthLogin, setSuccessAuthLogin] = useState<any>(false)
-  const [loginFirstTime, setLoginFirstTime] = useState<any>(false)
-  const currentYear = new Date().getFullYear()
-  const dispatch = useDispatch()
+  const [password, setPassword]                             = useState<string>('')
+  const [username, setUserName]                             = useState<string>('')
+  const [chooseTypeInputName, setChooseTypeInputName]       = useState<string>("true")
+  const [Language, setLanguage]                             = useState<string>('')
+  const [userNameError, setUserNameError]                   = useState<string>('')
+  const [passwordError, setPasswordError]                   = useState<string>('')
+  const [successAuthLogin, setSuccessAuthLogin]             = useState<any>(false)
+  const [loginFirstTime, setLoginFirstTime]                 = useState<any>(false)
+  const currentYear                                         = new Date().getFullYear()
+  const dispatch                                            = useDispatch()
 
   // **selecting
-  const login_first_time = useSelector((state: RootState) => state.login.login_first_time)
-  const usersDataNames = useSelector((state: RootStateUsers) => state.usersNames.data?.users)
-  const successLogin = useSelector((state: RootState) => state.login.data.authorization?.success)
+  const login_first_time    = useSelector((state: RootState) => state.login.login_first_time)
+  const usersDataNames      = useSelector((state: RootStateUsers) => state.usersNames.data?.users)
+  const successLogin        = useSelector((state: RootState) => state.login.data.authorization?.success)
 
   // **useEffect
-  // useEffect(() => {
-  //   //fetching users
-  //   //@ts-ignore
-  //   dispatch(fetchUsers())
+  useEffect(() => {
+    //fetching users
+    //@ts-ignore
+    dispatch(fetchUsers())
 
 
-  // }, [dispatch])
+  }, [dispatch])
 
   useEffect(() => {
     if (successLogin) {

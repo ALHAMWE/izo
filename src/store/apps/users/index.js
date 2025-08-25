@@ -46,7 +46,10 @@ const usersSlice = createSlice({
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false
-        state.data = action.payload
+        if (JSON.stringify(state.data) !== JSON.stringify(action.payload)) {
+          state.data = action.payload
+        }
+        // state.data = action.payload
         state.error = null
       })
       .addCase(fetchUsers.rejected, (state, action) => {
