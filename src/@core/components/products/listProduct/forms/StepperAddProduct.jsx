@@ -144,7 +144,7 @@ const StepperAddProduct = ({ isEdit, itemId, handleClose, addOpeningStock }) => 
     { id: 9, value: 'Custom Price Two' },
     { id: 10, value: 'Custom Price Three' }
   ]
-
+console.log('from stepper tableNames 🧀 ', names)
   // const contentDataState = ContentState.createFromBlockArray(convertFromHTML(initialLD))
   // const editorDataState = EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(initialLD)))
 

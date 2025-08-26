@@ -482,10 +482,10 @@ const ProductsTable = () => {
   }, [token, url,database])
 
   useEffect(() => {
-    if (token && url) {
+    if (token && url && database) {
       dispatch(fetchProducts({ token }))
     }
-  }, [dispatch, token, url])
+  }, [dispatch, token, url,database])
 
   // ** handle search function
   const handleSearch = searchValue => {
