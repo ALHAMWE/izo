@@ -115,7 +115,7 @@ if (themeConfig.routingLoader) {
 
 const App = (props: ExtendedAppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
-  const theme = useTheme();
+  // const theme = useTheme();
   const { themeColor, mainColor } = useThemeColor();
   const {fontStyle}= useTextTransform()
 
