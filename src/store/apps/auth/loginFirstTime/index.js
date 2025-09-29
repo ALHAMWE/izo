@@ -36,23 +36,25 @@ export const loginFirstTimeSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(loginFirstTime.fulfilled, (state, action) => {
-        state.data = action.payload
+        state.data       = action.payload
         state.statusCode = action.payload.status
-        state.message = action.payload.message
-        state.api_url = action.payload.api_url
-        state.database = action.payload.database
-        state.status = 'success'
+        state.message    = action.payload.message
+        state.api_url    = action.payload.api_url
+        state.database   = action.payload.database
+        state.status     = 'success'
+
         setCookie('DatabaseConnection', action.payload?.database)
         setCookie('ApiUrl', action.payload?.api_url)
 
         notify('Login for first time Successfully', 'success')
+
       })
       .addCase(loginFirstTime.pending, state => {
         state.status = 'pending'
       })
       .addCase(loginFirstTime.rejected, (state, action) => {
         state.status = 'rejected'
-        state.error = action.payload
+        state.error  = action.payload
         notify('There is an Error try again!', 'error')
       })
   }

@@ -2,7 +2,7 @@ import jwt_decode from 'jwt-decode'
 
 export const verifyAuth = async (token, key) => {
   const tokenSecret = token
-  const keySecret = key
+  const keySecret   = key
 
   // const stringToken = token.toString()
   // console.log('Token received:', token.value)

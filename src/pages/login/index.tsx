@@ -108,13 +108,12 @@ interface UserData {
   status: string
   users: object
 }
+
 export async function getStaticProps() {
   try {
     // const token = getCookie('token');
     const ApiUrl   = getCookie('ApiUrl') || 'https://izocloud.com/api';
-
     const database = getCookie('DatabaseConnection') || 'esai'
-
     const response = await axios.get(`${ApiUrl}/app/react/get-user`, {
       headers: {
           database:`${database}`,
@@ -160,50 +159,56 @@ const LoginPage: React.FC<{ userData: UserData }> & {
   const [userNameError, setUserNameError]                   = useState<string>('')
   const [passwordError, setPasswordError]                   = useState<string>('')
   const [successAuthLogin, setSuccessAuthLogin]             = useState<any>(false)
-  const [loginFirstTime, setLoginFirstTime]                 = useState<any>(false)
+  const [loginFirstTime, setLoginFirstTime] = useState<boolean>(() => {
+    return getCookie('DatabaseConnection') !== undefined;
+  });
   const currentYear                                         = new Date().getFullYear()
   const dispatch                                            = useDispatch()
 
   // **selecting
-  const login_first_time    = useSelector((state: RootState) => state.login.login_first_time)
+  // const login_first_time    = useSelector((state: RootState) => state.login.login_first_time)
   const usersDataNames      = useSelector((state: RootStateUsers) => state.usersNames.data?.users)
   const successLogin        = useSelector((state: RootState) => state.login.data.authorization?.success)
 
-  // **useEffect
-  useEffect(() => {
-    //fetching users
-    //@ts-ignore
-    dispatch(fetchUsers())
-
-
-  }, [dispatch])
 
   useEffect(() => {
     if (successLogin) {
+      console.log(" (0) 2025 successLogin" + successLogin);
       setSuccessAuthLogin(true)
     }
   }, [successLogin])
 
   useEffect(() => {
-    if (login_first_time ===true) {
-      setLoginFirstTime(true)
-    }
-  }, [login_first_time])
-
+      const login_first_time = getCookie('DatabaseConnection') !== undefined;
+      if (login_first_time === true) {
+        // console.log(" (1) 2025 SET LOGFIRST  " + login_first_time);
+        setLoginFirstTime(login_first_time);
+      }
+  }, [])
+  
   // handle redirect if user is first time
   useEffect(() => {
-    if (loginFirstTime) {
+    if (!loginFirstTime) {
+      // console.log(" (2) 2025 REDIRECT LOGFIRST  " + loginFirstTime);
       router.replace('/loginFirstTime')
     }
   }, [loginFirstTime, router])
-
-   // Handle Redirect if user is logged in successfully
+  
+  // Handle Redirect if user is logged in successfully
   useEffect(() => {
     if (successAuthLogin) {
+      // console.log(" (3) 2025 Success LOGFIRST  " + successAuthLogin);
       router.replace('/dashboards/analytics/')
     }
   }, [successAuthLogin, router])
 
+  
+  // **useEffect
+  useEffect(() => {
+    //fetching users 
+    //@ts-ignore
+      dispatch(fetchUsers())
+    }, [dispatch])
 
   const handleOnSubmit = (e: any) => {
     try {
@@ -228,6 +233,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
         password: password,
         logout_other: LogoutFromOtherDevices ? '1' : '0'
       }
+
       if (!password || !username) notify(" Fields can't be Empty", "error");
 
       //to go into page login for first time
@@ -262,18 +268,14 @@ const LoginPage: React.FC<{ userData: UserData }> & {
   }
 
   const handleChooseTypeInputName = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-
     setChooseTypeInputName(event.target.value)
-
     console.log("form raido", event.target.value)
-
-
   }
 
   // const handleChangeRememberMe = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   setRememberMe(event.target.checked)
   // }
+
   const handleChangeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value)
   }
@@ -290,64 +292,74 @@ const LoginPage: React.FC<{ userData: UserData }> & {
 
   return (
     <Box className='content-right'>
-      {!hidden ? (
-        <Box sx={{ p: 12, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <LoginIllustration width={500} alt='login-illustration' src={`/izoLogo/login_img.svg`} />
-        </Box>
-      ) : null}
+        {!hidden ? (
+          <Box sx={{ p: 12, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <LoginIllustration width={500} alt='login-illustration' src={`/izoLogo/login_img.svg`} />
+          </Box>
+        ) : null}
+
       <RightWrapper
         sx={{ ...(skin === 'bordered' && !hidden && { borderLeft: `1px solid ${theme.palette.divider}` }) }}
       >
         <Box sx={{ mx: 'auto', maxWidth: 400 }}>
           <Grid container >
             <Grid item xs={12} justifyContent={'center'} alignSelf={'center'} alignContent={'center'}  >
-            <Image  src={`/izoLogo/izo-logo-${theme.palette.mode}.png`} alt='logo' width={100} height={100}  background-color={'black'} style={{ margin: "0 auto", display:'block'}}  />
+              <Image  src={`/izoLogo/izo-logo-${theme.palette.mode}.png`} alt='logo' width={100} height={100}  background-color={'black'} style={{ margin: "0 auto", display:'block'}}  />
             </Grid>
-            <Grid item xs={12}  >
-            <Box sx={{ mx: 'auto', maxWidth: 400 }}>
-              <FormControl
-                  fullWidth
-                sx={{
-                  m: 1,
-                  '& .Mui-focused': {
-                    borderColor: '#ec6608 !important',
-                    color: '#ec6608 !important',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ec6608 !important'
-                    }
-                  }
-                }}
-                size='small'
-              >
-                <InputLabel id="demo-simple-select-label">Language</InputLabel>
-  <Select
-    labelId="demo-simple-select-label"
-    id="demo-simple-select"
-                    value={Language}
-                    label='Language'
 
-                    //@ts-ignore
-    onChange={handleChangeLanguage}
-    startAdornment={
-      <InputAdornment position='start'>
-        <TranslateIcon />
-      </InputAdornment>
-    }
-  >
-    <MenuItem value='ar'>Arabic</MenuItem>
-    <MenuItem value='en'>English</MenuItem>
-  </Select>
-              </FormControl>
+            <Grid item xs={12} justifyContent={'center'} alignSelf={'center'} alignContent={'center'}  >
+              
+              <Typography variant='h6' sx={{ mb: 1.5 }} textAlign={'center'} >
+                Welcome to {themeConfig.templateName.toUpperCase()}! 👋🏻
+              </Typography>
+              
+              <Typography sx={{ mb: 6, color: 'text.secondary' }} textAlign={'center'}>
+                Please sign-in to your account and start the adventure
+              </Typography>
+             
+            </Grid>
+            
+            <Grid item xs={12}  >
+              <Box sx={{ mx: 'auto', maxWidth: 400 }}>
+                <FormControl
+                    fullWidth
+                  sx={{
+                    m: 1,
+                    '& .Mui-focused': {
+                      borderColor: '#ec6608 !important',
+                      color: '#ec6608 !important',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#ec6608 !important'
+                      }
+                    }
+                  }}
+                  size='small'
+                >
+                <InputLabel id="demo-simple-select-label">Language</InputLabel>
+                
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                                  value={Language}
+                                  label='Language'
+
+                                  //@ts-ignore
+                  onChange={handleChangeLanguage}
+                  startAdornment={
+                    <InputAdornment position='start'>
+                      <TranslateIcon />
+                    </InputAdornment>
+                  }
+                >
+                  <MenuItem value='ar'>Arabic</MenuItem>
+                  <MenuItem value='en'>English</MenuItem>
+                </Select>
+                
+                </FormControl>
               </Box>
-              </Grid>
+            </Grid>
           </Grid>
 
-          <Typography variant='h6' sx={{ mb: 1.5 }}>
-            Welcome to {themeConfig.templateName.toUpperCase()}! 👋🏻
-          </Typography>
-          <Typography sx={{ mb: 6, color: 'text.secondary' }}>
-            Please sign-in to your account and start the adventure
-          </Typography>
 
           <form noValidate autoComplete='off'>
             <FormControl fullWidth
@@ -361,12 +373,13 @@ const LoginPage: React.FC<{ userData: UserData }> & {
                   }
                 }
               }}>
-              <RadioGroup name="use-radio-group" onChange={handleChooseTypeInputName} defaultValue={"true"}>
+              {/* <RadioGroup name="use-radio-group" onChange={handleChooseTypeInputName} defaultValue={"true"}>
                 <FormControlLabel value={"true"} label="Choose my User Name" control={<Radio />} />
                 <FormControlLabel value={"false"} label="Write my User Name" control={<Radio />} />
-              </RadioGroup>
+              </RadioGroup> */}
             </FormControl>
-            {chooseTypeInputName === "true" ? (
+
+            {/*{chooseTypeInputName === "true" ? (
                <FormControl
                 fullWidth
                 sx={{
@@ -380,10 +393,10 @@ const LoginPage: React.FC<{ userData: UserData }> & {
                   }
                 }}
               >
-                <InputLabel id='outlined-select-currency-label'>User Name</InputLabel>
+                <InputLabel id='outlined-select-currency-label'>Email</InputLabel>
                 <Select
                     id='outlined-select-currency'
-                    label='User Name'
+                    label='Email'
                     value={username}
 
                     //@ts-ignore
@@ -403,42 +416,39 @@ const LoginPage: React.FC<{ userData: UserData }> & {
                 </Select>
                 {userNameError && <FormHelperText>{userNameError}</FormHelperText>}
               </FormControl>
-             ) : (
+             ) : (*/}
+                <FormControl
+                  fullWidth
+                  sx={{
+                    mb: 2,
+                    '& .Mui-focused': {
+                      borderColor: '#ec6608 !important',
+                      color: '#ec6608 !important',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#ec6608 !important'
+                      }
+                    }
+                  }}
+                >
+                  <TextField
+                    id='outlined-select-currency'
 
- <FormControl
-              fullWidth
-              sx={{
-                mb: 2,
-                '& .Mui-focused': {
-                  borderColor: '#ec6608 !important',
-                  color: '#ec6608 !important',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ec6608 !important'
-                  }
-                }
-              }}
-            >
-              <TextField
-                id='outlined-select-currency'
-
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                      <AccountCircle />
-                    </InputAdornment>
-                  )
-                }}
-                label='User Name'
-                error={userNameError ? true : false}
-                value={username}
-                helperText={userNameError}
-                onChange={handleChangeUserName}
-              >
-              </TextField>
-            </FormControl>
-
-
-            )}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <AccountCircle />
+                        </InputAdornment>
+                      )
+                    }}
+                    label='Email'
+                    error={userNameError ? true : false}
+                    value={username}
+                    helperText={userNameError}
+                    onChange={handleChangeUserName}
+                  >
+                  </TextField>
+                </FormControl>
+            {/* )} */}
 
             <FormControl
               fullWidth
@@ -477,6 +487,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
                 onChange={handleChangePassword}
               />
             </FormControl>
+            
             <Box
               sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
             >
@@ -507,6 +518,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
               />
               <LinkStyled href='/forgot-password'>Forgot Password?</LinkStyled>
             </Box>
+            
             <Button
               onClick={handleOnSubmit}
               className={styles.custom__btn}
@@ -533,6 +545,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
               <span></span>
               <span></span>
             </Button>
+            
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
               <Typography variant='body2' sx={{ mr: 2 }}>
                 New on our platform?
@@ -541,12 +554,16 @@ const LoginPage: React.FC<{ userData: UserData }> & {
                 <LinkStyled href='/register'>Create an account</LinkStyled>
               </Typography>
             </Box>
+            
             <Divider sx={{ my: `${theme.spacing(6)} !important` }}></Divider>
+            
             <Typography sx={{ mb: 4, color: 'text.secondary', fontSize: 12, textAlign: 'center' }}>
               IZO CLOUD - V4.0 | Powered By AGT | +971-56-777-9250 | +971-4-23-55-919 | All Rights Reserved Copyright ©{' '}
               {currentYear}
             </Typography>
+          
           </form>
+
         </Box>
       </RightWrapper>
     </Box>
@@ -554,6 +571,5 @@ const LoginPage: React.FC<{ userData: UserData }> & {
 }
 LoginPage.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 
-// LoginPage.guestGuard = true
-
 export default LoginPage
+// LoginPage.guestGuard = true

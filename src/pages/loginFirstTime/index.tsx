@@ -48,8 +48,9 @@ const CenterWrapper = styled(Card)<CardProps>(({ theme }) => ({
   flexWrap: 'wrap',
   alignItems: 'center',
   justifyContent: 'center',
+  margin:'20px',
   backgroundColor: 'white !important',
-  borderRadius: '25px',
+  borderRadius: '10px',
   boxShadow: '3px 5px 10px rgba(0, 0, 0, 0.5)',
 
   padding: theme.spacing(10),
@@ -117,7 +118,8 @@ const LoginFirstTime = () => {
     } else {
 
       setUserNameError("")
-      setPasswordError("")
+      setPasswordError("")  
+
       const loginData: FormData = {
         username: userName,
         password: password,
@@ -127,7 +129,9 @@ const LoginFirstTime = () => {
 
       //@ts-ignore
       dispatch(loginFirstTime(loginData))
+
       if (statusCode === 200) router.replace("/login")
+        
     }
 
   }
@@ -156,7 +160,7 @@ const LoginFirstTime = () => {
         minHeight: '100vh'
       }}
     >
-      <CenterWrapper sx={{ margin: '0px 0' }}>
+      <CenterWrapper sx={{ margin: '10px 0' }}>
         <Image
           src={'/izoLogo/izo-logo-dark.png'}
           alt='izo-logo'

@@ -33,15 +33,15 @@ const initialState = {
 
   error: null
 }
-const  database = getCookie('DatabaseConnection');
-const  ApiUrl   = getCookie('ApiUrl');
+// const  database = getCookie('DatabaseConnection');
+const  ApiUrl   = "https://izocloud.com/api";
 // Define an async thunk action to handle login
 export const login = createAsyncThunk('feature/login', async loginData => {
   try {
     const response = await axios.post(`${ApiUrl}/app/react/login`, loginData, {
       headers: {
         'Content-Type': 'application/json',
-        database:`${database}`
+        // database:`${database}`
       }
     })
 
@@ -108,7 +108,7 @@ export const loginSlice = createSlice({
         if (action.payload.authorization) {
           // Ensure that authorization and token exist before assigning
           state.userType = action.payload.authorization?.type || ''
-          state.token = action.payload.authorization?.token || ''
+          state.token    = action.payload.authorization?.token || ''
         }
         state.status = 'success'
 
@@ -145,12 +145,14 @@ export const loginSlice = createSlice({
         } else {
           setCookie('currency_code', null)
         }
+
         notify('Login Successfully', 'success')
 
         // setTimeout(() => {
         //   // router.replace('/dashboards/analytics/')
         //   window.location.href = '/dashboards/analytics/'
         // }, 2000)
+
       })
       .addCase(login.pending, state => {
         state.status = 'pending'
