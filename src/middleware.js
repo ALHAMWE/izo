@@ -149,8 +149,8 @@ const getBaseUrl = req => {
 
 const middleware = async req => {
   const token = req.cookies.get('token')
-  const key = req.cookies.get('key')
-  const url = req.url
+  const key   = req.cookies.get('key')
+  const url   = req.url
   const validToken = token && key && (await verifyAuth(token, key))
 
   // Redirect logic

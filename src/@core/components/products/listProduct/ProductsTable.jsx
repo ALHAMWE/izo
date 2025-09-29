@@ -77,6 +77,7 @@ const RowOptions = ({ id, setOpenViewMain }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [token, setToken] = useState('')
   const [url, setUrl] = useState('')
+  const [database,setDatabase] = useState('')
 
   const rowOptionsOpen = anchorEl
 
@@ -89,11 +90,13 @@ const RowOptions = ({ id, setOpenViewMain }) => {
 
   useEffect(() => {
     // ** Cookies
-    const token = getCookie('token')
-    const url = getCookie('apiUrl')
+    const token     = getCookie('token')
+    const url      = getCookie('apiUrl')
+    const database = getCookie('DatabaseConnection')
     setToken(token)
     setUrl(url)
-  }, [token, url])
+    setDatabase(database)
+  }, [token, url,database])
 
   const toggle = () => {
     setOpen(prev => !prev)
@@ -420,6 +423,7 @@ const ProductsTable = () => {
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 })
   const [token, setToken] = useState('')
   const [url, setUrl] = useState('')
+  const [database, setDatabase] = useState('')
   const [searchText, setSearchText] = useState('')
   const [filteredData, setFilteredData] = useState([])
   const [data, setData] = useState([])
@@ -469,17 +473,19 @@ const ProductsTable = () => {
 
   useEffect(() => {
     // ** Cookies
-    const token = getCookie('token')
-    const url = getCookie('apiUrl')
+    const token    = getCookie('token')
+    const url      = getCookie('apiUrl')
+    const database = getCookie('DatabaseConnection')
     setToken(token)
     setUrl(url)
-  }, [token, url])
+    setDatabase(database)
+  }, [token, url,database])
 
   useEffect(() => {
-    if (token && url) {
+    if (token && url && database) {
       dispatch(fetchProducts({ token }))
     }
-  }, [dispatch, token, url])
+  }, [dispatch, token, url,database])
 
   // ** handle search function
   const handleSearch = searchValue => {

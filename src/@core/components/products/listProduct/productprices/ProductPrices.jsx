@@ -713,8 +713,8 @@ const ProductPrices = ({ initialValues, errors, touched, handleBlur, handleChang
   ]
 
   // ** Selectors
-  const taxes = useSelector(state => state.getCreateProduct?.data?.value.taxes)
-  const units = useSelector(state => state.getCreateProduct?.data?.value.units)
+  const taxes     = useSelector(state => state.getCreateProduct?.data?.value.taxes)
+  const units     = useSelector(state => state.getCreateProduct?.data?.value.units)
   const sub_units = useSelector(state => state.getCreateProduct?.data?.value.sub_units)
 
   // ** useEffect
