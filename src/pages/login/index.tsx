@@ -14,7 +14,7 @@ import { login } from 'src/store/apps/auth/login/index.js'
 import { useDispatch } from 'react-redux'
 
 // import { RootStateRegister } from 'src/types/apps/rooteState'
-import { RootStateUsers } from 'src/types/apps/rooteState'
+// import { RootStateUsers } from 'src/types/apps/rooteState'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -154,7 +154,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
   const [LogoutFromOtherDevices, setLogoutFromOtherDevices] = useState<boolean>(true)
   const [password, setPassword]                             = useState<string>('')
   const [username, setUserName]                             = useState<string>('')
-  const [chooseTypeInputName, setChooseTypeInputName]       = useState<string>("true")
+  // const [chooseTypeInputName, setChooseTypeInputName]       = useState<string>("true")
   const [Language, setLanguage]                             = useState<string>('')
   const [userNameError, setUserNameError]                   = useState<string>('')
   const [passwordError, setPasswordError]                   = useState<string>('')
@@ -167,7 +167,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
 
   // **selecting
   // const login_first_time    = useSelector((state: RootState) => state.login.login_first_time)
-  const usersDataNames      = useSelector((state: RootStateUsers) => state.usersNames.data?.users)
+  // const usersDataNames      = useSelector((state: RootStateUsers) => state.usersNames.data?.users)
   const successLogin        = useSelector((state: RootState) => state.login.data.authorization?.success)
 
 
@@ -267,10 +267,10 @@ const LoginPage: React.FC<{ userData: UserData }> & {
     setLanguage(event.target.value)
   }
 
-  const handleChooseTypeInputName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChooseTypeInputName(event.target.value)
-    console.log("form raido", event.target.value)
-  }
+  // const handleChooseTypeInputName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setChooseTypeInputName(event.target.value)
+  //   console.log("form raido", event.target.value)
+  // }
 
   // const handleChangeRememberMe = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   setRememberMe(event.target.checked)
