@@ -70,7 +70,7 @@ import styles from './styles.module.css'
 
 import { RootState } from 'src/types/apps/rooteState'
 import notify from 'src/utils/notify'
-import { FormHelperText, Select } from '@mui/material'
+import {  Select } from '@mui/material'
 
 
 const RightWrapper = styled(Box)<BoxProps>(({ theme }) => ({
@@ -185,7 +185,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
         setLoginFirstTime(login_first_time);
       }
   }, [])
-  
+
   // handle redirect if user is first time
   useEffect(() => {
     if (!loginFirstTime) {
@@ -193,7 +193,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
       router.replace('/loginFirstTime')
     }
   }, [loginFirstTime, router])
-  
+
   // Handle Redirect if user is logged in successfully
   useEffect(() => {
     if (successAuthLogin) {
@@ -202,10 +202,10 @@ const LoginPage: React.FC<{ userData: UserData }> & {
     }
   }, [successAuthLogin, router])
 
-  
+
   // **useEffect
   useEffect(() => {
-    //fetching users 
+    //fetching users
     //@ts-ignore
       dispatch(fetchUsers())
     }, [dispatch])
@@ -308,15 +308,15 @@ const LoginPage: React.FC<{ userData: UserData }> & {
             </Grid>
 
             <Grid item xs={12} justifyContent={'center'} alignSelf={'center'} alignContent={'center'}  >
-              
+
               <Typography variant='h6' sx={{ mb: 1.5 }} textAlign={'center'} >
                 Welcome to {themeConfig.templateName.toUpperCase()}! 👋🏻
               </Typography>
-              
+
               <Typography sx={{ mb: 6, color: 'text.secondary' }} textAlign={'center'}>
                 Please sign-in to your account and start the adventure
               </Typography>
-             
+
             </Grid>
 
             <Grid item xs={12}  >
@@ -336,7 +336,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
                   size='small'
                 >
                 <InputLabel id="demo-simple-select-label">Language</InputLabel>
-                
+
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -354,7 +354,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
                   <MenuItem value='ar'>Arabic</MenuItem>
                   <MenuItem value='en'>English</MenuItem>
                 </Select>
-                
+
                 </FormControl>
               </Box>
             </Grid>
@@ -487,7 +487,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
                 onChange={handleChangePassword}
               />
             </FormControl>
-            
+
             <Box
               sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
             >
@@ -518,7 +518,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
               />
               <LinkStyled href='/forgot-password'>Forgot Password?</LinkStyled>
             </Box>
-            
+
             <Button
               onClick={handleOnSubmit}
               className={styles.custom__btn}
@@ -545,7 +545,7 @@ const LoginPage: React.FC<{ userData: UserData }> & {
               <span></span>
               <span></span>
             </Button>
-            
+
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
               <Typography variant='body2' sx={{ mr: 2 }}>
                 New on our platform?
@@ -554,14 +554,14 @@ const LoginPage: React.FC<{ userData: UserData }> & {
                 <LinkStyled href='/register'>Create an account</LinkStyled>
               </Typography>
             </Box>
-            
+
             <Divider sx={{ my: `${theme.spacing(6)} !important` }}></Divider>
-            
+
             <Typography sx={{ mb: 4, color: 'text.secondary', fontSize: 12, textAlign: 'center' }}>
               IZO CLOUD - V4.0 | Powered By AGT | +971-56-777-9250 | +971-4-23-55-919 | All Rights Reserved Copyright ©{' '}
               {currentYear}
             </Typography>
-          
+
           </form>
 
         </Box>
