@@ -187,12 +187,12 @@ const LoginPage: React.FC<{ userData: UserData }> & {
   }, [])
 
   // handle redirect if user is first time
-  useEffect(() => {
-    if (!loginFirstTime) {
-      // console.log(" (2) 2025 REDIRECT LOGFIRST  " + loginFirstTime);
-      router.replace('/loginFirstTime')
-    }
-  }, [loginFirstTime, router])
+  // useEffect(() => {
+  //   if (!loginFirstTime) {
+  //     // console.log(" (2) 2025 REDIRECT LOGFIRST  " + loginFirstTime);
+  //     router.replace('/loginFirstTime')
+  //   }
+  // }, [loginFirstTime, router])
 
   // Handle Redirect if user is logged in successfully
   useEffect(() => {
