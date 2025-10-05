@@ -159,9 +159,9 @@ const LoginPage: React.FC<{ userData: UserData }> & {
   const [userNameError, setUserNameError]                   = useState<string>('')
   const [passwordError, setPasswordError]                   = useState<string>('')
   const [successAuthLogin, setSuccessAuthLogin]             = useState<any>(false)
-  const [loginFirstTime, setLoginFirstTime] = useState<boolean>(() => {
-    return getCookie('DatabaseConnection') !== undefined;
-  });
+  // const [loginFirstTime, setLoginFirstTime] = useState<boolean>(() => {
+  //   return getCookie('DatabaseConnection') !== undefined;
+  // });
   const currentYear                                         = new Date().getFullYear()
   const dispatch                                            = useDispatch()
 
@@ -178,13 +178,13 @@ const LoginPage: React.FC<{ userData: UserData }> & {
     }
   }, [successLogin])
 
-  useEffect(() => {
-      const login_first_time = getCookie('DatabaseConnection') !== undefined;
-      if (login_first_time === true) {
-        // console.log(" (1) 2025 SET LOGFIRST  " + login_first_time);
-        setLoginFirstTime(login_first_time);
-      }
-  }, [])
+  // useEffect(() => {
+  //     const login_first_time = getCookie('DatabaseConnection') !== undefined;
+  //     if (login_first_time === true) {
+  //       // console.log(" (1) 2025 SET LOGFIRST  " + login_first_time);
+  //       setLoginFirstTime(login_first_time);
+  //     }
+  // }, [])
 
   // handle redirect if user is first time
   // useEffect(() => {
