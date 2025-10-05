@@ -107,9 +107,13 @@ type CurrenciesType = {
 
 export async function getStaticProps() {
   // Fetch data from the API
-  const apiUrl = 'https://test.izocloud.com/api/app/react/currency/all'
-
-  const response = await axios.get(apiUrl)
+  const apiUrl   =  'https://esai.izocloud.com/api';
+  const database =  'esai'
+  const response = await axios.get(`${apiUrl}/app/react/currency/all`, {
+      headers: {
+          database:`${database}`,
+      },
+    })
 
   if (!response) {
     throw new Error(`Failed to fetch data from ${apiUrl}`)
@@ -238,8 +242,6 @@ const Register: React.FC<{ currencies: CurrenciesType }> & {
 
   console.log("currencies 🎁🎁", currencies)
 
-
-
    return (
     <Grid
       container
@@ -264,7 +266,7 @@ const Register: React.FC<{ currencies: CurrenciesType }> & {
             {({ values, handleBlur, handleChange, handleSubmit, touched, errors,setFieldValue }) => (
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
-                  <Grid spacing={2} item xs={12} sx={{ padding: '20px 0' }}>
+                  <Grid container spacing={1} item xs={12} sx={{ padding: '20px 0' }}>
                     <fieldset style={{ border: '1px solid #ec6608', borderRadius: '10px', padding: '20px' }}>
                       <legend className={styles.gradientText}>Company Details</legend>
                       <Box
@@ -686,6 +688,7 @@ const Register: React.FC<{ currencies: CurrenciesType }> & {
                                 </IconButton>
                               </InputAdornment>
                             }
+
                             name='password'
                             onChange={handleChange}
                            />
