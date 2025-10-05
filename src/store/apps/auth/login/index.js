@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import notify from '../../../../utils/notify.jsx'
 import { setCookie } from 'cookies-next'
-// import { getCookie } from 'cookies-next'
+import { getCookie } from 'cookies-next'
 import axios from 'axios'
 
 const initialState = {
@@ -33,7 +33,7 @@ const initialState = {
 
   error: null
 }
-// const  database = getCookie('DatabaseConnection');
+const  Database = getCookie('DatabaseConnection');
 const  ApiUrl   = "https://izocloud.com/api";
 // Define an async thunk action to handle login
 export const login = createAsyncThunk('feature/login', async loginData => {
@@ -41,7 +41,7 @@ export const login = createAsyncThunk('feature/login', async loginData => {
     const response = await axios.post(`${ApiUrl}/app/react/login`, loginData, {
       headers: {
         'Content-Type': 'application/json',
-        // database:`${database}`
+        database:`${Database}`
       }
     })
 
