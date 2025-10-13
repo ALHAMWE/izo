@@ -167,26 +167,24 @@ const App = (props: ExtendedAppProps) => {
               }
 
               /* Custom scrollbar styles */
-    ::-webkit-scrollbar {
-      width: 8px; /* Width of the scrollbar */
+                ::-webkit-scrollbar {
+                  width: 8px; /* Width of the scrollbar */
 
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: 'transparent'; /* Color of the track */
-       border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb {
-       background: ${mainColor}; /* Color of the scroll thumb on hover */
+                  height: 8px;
+                }
+                ::-webkit-scrollbar-track {
+                  background: 'transparent'; /* Color of the track */
+                  border-radius: 10px;
+                }
+                ::-webkit-scrollbar-thumb {
+                  background: ${mainColor}; /* Color of the scroll thumb on hover */
 
-       border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
+                  border-radius: 10px;
+                }
+                ::-webkit-scrollbar-thumb:hover {
 
-       background: ${mainColor}; /* Color of the scroll thumb */
-    }
-
-
+                  background: ${mainColor}; /* Color of the scroll thumb */
+                }
           `}
         />
 
