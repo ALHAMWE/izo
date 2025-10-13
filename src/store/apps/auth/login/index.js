@@ -68,6 +68,7 @@ export const loginSlice = createSlice({
         state.imgUrl = action.payload.authorization?.user?.profile_photo_url
         state.userName = action.payload.authorization?.user?.first_name
         state.apiUrl = action.payload?.api_url
+        state.DatabaseConnection = action.payload?.database
         state.authorization = action.payload?.authorization
         state.currency_id = action.payload?.currency.id
         state.currency_code = action.payload?.currency.code
@@ -103,6 +104,7 @@ export const loginSlice = createSlice({
           setCookie('TransactionEditDays', action.payload?.global_data[0]?.global_settings.TransactionEditDays)
           setCookie('fontStyle', action.payload?.global_data[0]?.global_settings.FontStyle)
           setCookie('FilterInitial', action.payload?.global_data[0]?.global_settings.FilterInitial)
+          setCookie('DatabaseConnection', action.payload?.database)
         }
 
         if (action.payload.authorization) {
