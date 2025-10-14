@@ -33,7 +33,7 @@ const initialState = {
 
   error: null
 }
-const  Database = getCookie('DatabaseConnection');
+
 const  ApiUrl   = "https://izocloud.com/api";
 // Define an async thunk action to handle login
 export const login = createAsyncThunk('feature/login', async loginData => {
@@ -41,7 +41,7 @@ export const login = createAsyncThunk('feature/login', async loginData => {
     const response = await axios.post(`${ApiUrl}/app/react/login`, loginData, {
       headers: {
         'Content-Type': 'application/json',
-        database:`${Database}`
+
       }
     })
 
