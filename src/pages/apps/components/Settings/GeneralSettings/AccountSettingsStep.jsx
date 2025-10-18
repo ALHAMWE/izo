@@ -22,10 +22,10 @@ const AccountSettingsStep = ({ control, errors, settingsValue }) => {
                 <Grid item xs={12} md={6}>
                     <RHFSelectField
                         name="financialYearStartMonth"
-                        control={control}
+                        control={control || {}}
                         label="Financial Year Start Month"
-                        options={settingsValue?.months}
-                        error={errors.financialYearStartMonth?.message}
+                        options={settingsValue?.months || []}
+                        error={errors.financialYearStartMonth?.message || ''}
                         fullWidth
                     />
                 </Grid>
