@@ -31,3 +31,7 @@ export function getImageUrl(image, folder) {
 
     return `${NEXT_PUBLIC_IMAGE_BASE_URL}/${folder}/${image}`;
 }
+
+export function capitalizeFirstLetter(string) {
+    return string?.charAt?.(0)?.toUpperCase() + string?.slice(1);
+}

@@ -7,11 +7,6 @@ import CustomGridContainer from "../../Common/CustomGridContainer";
 
 const BusinessInformationStep = ({ control, errors, setValue, settingsValue }) => {
 
-    const currencyOptions = [
-        { label: 'United Arab Emirates - AED', value: 'AED' },
-        { label: 'US Dollar - USD', value: 'USD' },
-    ];
-
     return (
         <Box>
             <Typography variant="h6" sx={{ fontWeight: 600, my: 3 }}>Business Information</Typography>

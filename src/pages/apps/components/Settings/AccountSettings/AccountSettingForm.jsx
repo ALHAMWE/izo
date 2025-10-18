@@ -3,19 +3,10 @@ import { Grid, Box, Typography, Card, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import RHFTextField from '../../forms/RHFTextField';
 import RHFSelectField from '../../forms/RHFSelectField';
 import RHFAutocomplete from '../../forms/RHFAutocomplete';
 import CustomGridContainer from '../../Common/CustomGridContainer';
 
-const accounts = [
-    { label: 'Liabilities', value: 'liabilities' },
-    { label: 'Assets', value: 'assets' },
-    { label: 'Bank', value: 'bank' },
-    { label: 'Cash In Hand', value: 'cash_in_hand' },
-    { label: 'Customers', value: 'customers' },
-    { label: 'Suppliers', value: 'suppliers' }
-];
 const expenseOptions = [
     { label: 'Shipping', value: 'Shipping' },
     { label: 'Custom Duty', value: 'Custom Duty' },
@@ -33,20 +24,20 @@ const schema = yup.object({
     supplierAccountType: yup.string().required('Required')
 });
 
-export default function AccountSettingsForm() {
+export default function AccountSettingsForm({ settingsInfo, settingsValue, onSuccess, onError, loading }) {
     const {
         control,
         handleSubmit,
         formState: { errors, isSubmitting }
     } = useForm({
         defaultValues: {
-            accountLiability: '',
-            accountAssets: '',
-            accountBank: '',
-            accountCash: '',
+            accountLiability: settingsValue?.accounts_liabilities.find(a => a.id === settingsInfo?.liability)?.value || '',
+            accountAssets: settingsValue?.accounts_asset.find(a => a.id === settingsInfo?.assets)?.value || '',
+            accountBank: settingsValue?.accounts_bank.find(a => a.id === settingsInfo?.bank)?.value || '',
+            accountCash: settingsValue?.accounts_cash.find(a => a.id === settingsInfo?.cash)?.value || '',
             additionalExpense: [],
-            customerAccountType: '',
-            supplierAccountType: ''
+            customerAccountType: settingsValue?.accounts_customer.find(a => a.id === settingsInfo?.customer_type_id)?.value || '',
+            supplierAccountType: settingsValue?.accounts_supplier.find(a => a.id === settingsInfo?.supplier_type_id)?.value || ''
         },
         resolver: yupResolver(schema)
     });
@@ -63,13 +54,13 @@ export default function AccountSettingsForm() {
                     Account Settings
                 </Typography>
                 <CustomGridContainer>
-                    
+
                     <Grid item xs={12} md={3}>
                         <RHFSelectField
                             name="accountLiability"
                             control={control}
                             label="Account liability"
-                            options={accounts.filter(a => a.label === 'Liabilities')}
+                            options={settingsValue?.accounts_liabilities}
                             error={errors.accountLiability?.message}
                         />
                     </Grid>
@@ -78,7 +69,7 @@ export default function AccountSettingsForm() {
                             name="accountAssets"
                             control={control}
                             label="Account Assets"
-                            options={accounts.filter(a => a.label === 'Assets')}
+                            options={settingsValue?.accounts_asset}
                             error={errors.accountAssets?.message}
                         />
                     </Grid>
@@ -87,7 +78,7 @@ export default function AccountSettingsForm() {
                             name="accountBank"
                             control={control}
                             label="Account Bank"
-                            options={accounts.filter(a => a.label === 'Bank')}
+                            options={settingsValue?.accounts_bank}
                             error={errors.accountBank?.message}
                         />
                     </Grid>
@@ -96,7 +87,7 @@ export default function AccountSettingsForm() {
                             name="accountCash"
                             control={control}
                             label="Account Cash"
-                            options={accounts.filter(a => a.label === 'Cash In Hand')}
+                            options={settingsValue?.accounts_cash}
                             error={errors.accountCash?.message}
                         />
                     </Grid>
@@ -116,7 +107,7 @@ export default function AccountSettingsForm() {
                             name="customerAccountType"
                             control={control}
                             label="Customer Account Type"
-                            options={accounts.filter(a => a.label === 'Customers')}
+                            options={settingsValue?.accounts_customer}
                             error={errors.customerAccountType?.message}
                         />
                     </Grid>
@@ -125,7 +116,7 @@ export default function AccountSettingsForm() {
                             name="supplierAccountType"
                             control={control}
                             label="Supplier Account Type"
-                            options={accounts.filter(a => a.label === 'Suppliers')}
+                            options={settingsValue?.accounts_supplier}
                             error={errors.supplierAccountType?.message}
                         />
                     </Grid>

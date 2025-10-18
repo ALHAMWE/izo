@@ -38,10 +38,7 @@ const FormatDisplayStep = ({ control, errors, settingsValue }) => {
                         name="currencySymbolPlacement"
                         control={control}
                         label="Currency Symbol Placement"
-                        options={[
-                            { label: 'Before amount', value: 'before' },
-                            { label: 'After amount', value: 'after' }
-                        ]}
+                        options={settingsValue?.currency_symbol_placement}
                         error={errors.currencySymbolPlacement?.message}
                         fullWidth
                     />

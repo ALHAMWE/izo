@@ -22,14 +22,14 @@ const steps = [
 
 // Yup validation schemas for each step
 const schemaStep1 = yup.object({
-    businessName: yup.string().required('Business Name is required'),
-    currency: yup.string().required('Currency is required'),
-    timeZone: yup.string().required('Time zone is required'),
+    businessName: yup.string().required('Business Name is Required'),
+    currency: yup.string().required('Currency is Required'),
+    timeZone: yup.string().required('Time zone is Required'),
     logo: yup.mixed().nullable()
 });
 const schemaStep2 = yup.object({
     fixingDate: yup.date().nullable(),
-    startDate: yup.date().typeError('Start Date is required').nullable().required('Start Date is required'),
+    startDate: yup.date().typeError('Start Date is Required').nullable().required('Start Date is Required'),
     financialYearStartMonth: yup.string().required('Required'),
     defaultProfitPercent: yup.number().typeError('Must be a number').required('Required'),
     // continuousInventory: yup.boolean()
@@ -55,12 +55,12 @@ const GeneralSettingsForm = ({ settingsInfo, settingsValue, onSuccess, onError, 
         startDate: settingsInfo?.start_date,
         financialYearStartMonth: settingsValue?.months.find(m => m.id === settingsInfo?.fy_start_month)?.value || '',
         defaultProfitPercent: 0,
-        dateFormat: settingsInfo?.date_format,
+        dateFormat: settingsValue?.date_formats.find(d => d.id === settingsInfo?.date_format)?.value || '',
         timeFormat: getTimeFormat(settingsInfo?.time_format) || '',
-        currencySymbolPlacement: settingsInfo?.currency_symbol_placement,
+        currencySymbolPlacement: settingsValue?.currency_symbol_placement.find(d => d.id === settingsInfo?.currency_symbol_placement)?.value || '',
         openingBalanceVoucher: '',
-        numbersAfterCommaAmount: '0.00',
-        numbersAfterCommaQty: '0.00',
+        numbersAfterCommaAmount: settingsValue?.amount_digit.find(d => d.id === settingsInfo?.amount_currency_precision)?.value || '0.00',
+        numbersAfterCommaQty: settingsValue?.amount_digit.find(d => d.id === settingsInfo?.qty_currency_precision)?.value || '0.00',
     };
 
     const {

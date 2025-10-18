@@ -9,18 +9,6 @@ import RHFSelectField from '../../forms/RHFSelectField';
 import CustomGridContainer from '../../Common/CustomGridContainer';
 import RHFDatePicker from '../../forms/RHFDatePicker';
 
-const expiryActions = [
-    { label: 'None', value: 'none' },
-    { label: 'Block Sales', value: 'block' },
-    { label: 'Warn Only', value: 'warn' }
-];
-
-const units = [
-    { label: 'Pieces (Pc/s)', value: 'pieces' },
-    { label: 'Box', value: 'box' },
-    { label: 'Kilograms (kg)', value: 'kg' },
-];
-
 const costOfSalesAccounts = [
     { label: 'Cost Account 1', value: 'cost1' },
     { label: 'Cost Account 2', value: 'cost2' }
@@ -31,20 +19,21 @@ const inventoryAccounts = [
 ];
 
 const schema = yup.object({
-    defaultProfitPercent: yup.number().typeError('Profit percent must be a number').required('Default profit percent is required'),
+    defaultProfitPercent: yup.number().typeError('Profit Percent must be a Number').required('Default profit percent is Required'),
     continuousInventory: yup.boolean(),
-    costOfSalesAccount: yup.string().required('Cost of Sales Account is required'),
-    inventoryAccount: yup.string().required('Inventory Account is required'),
+    defaultUnit: yup.string().required('Default Unit is Required'),
+    costOfSalesAccount: yup.string().required('Cost of Sales Account is Required'),
+    inventoryAccount: yup.string().required('Inventory Account is Required'),
     skuPrefix: yup.string(),
     enableProductExpiry: yup.boolean(),
     onProductExpiry: yup.string().when('enableProductExpiry', {
         is: true,
-        then: yup.string().required('Please select action on product expiry'),
+        then: yup.string().required('Please select action on Product Expiry'),
         otherwise: yup.string().notRequired()
     })
 });
 
-export default function ProductSettingsForm() {
+export default function ProductSettingsForm({ settingsInfo, settingsValue, onSuccess, onError, loading }) {
     const {
         control,
         handleSubmit,
@@ -52,14 +41,15 @@ export default function ProductSettingsForm() {
         formState: { errors, isSubmitting }
     } = useForm({
         defaultValues: {
-            defaultProfitPercent: 0,
+            defaultProfitPercent: settingsInfo?.default_profit_percent || 0,
             startFrom: '',
-            continuousInventory: false,
+            continuousInventory: settingsInfo?.continuous_inventory || false,
+            defaultUnit: settingsValue?.units.find(a => a.id === settingsInfo?.default_unit)?.value || '',
             costOfSalesAccount: '',
             inventoryAccount: '',
-            skuPrefix: '',
-            enableProductExpiry: false,
-            onProductExpiry: ''
+            skuPrefix: settingsInfo?.sku_prefix || '',
+            enableProductExpiry: settingsInfo?.enable_product_expiry || false,
+            onProductExpiry: settingsValue?.product_expiry_sale.find(a => a.id === settingsInfo?.on_product_expiry)?.value || '',
         },
         resolver: yupResolver(schema)
     });
@@ -78,7 +68,7 @@ export default function ProductSettingsForm() {
                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 4 }}>
                     Product Settings
                 </Typography>
-                <CustomGridContainer>
+                <CustomGridContainer sx={{ alignItems: 'center' }}>
                     <Grid item xs={12} md={3}>
                         <RHFDatePicker
                             name="startFrom"
@@ -87,6 +77,7 @@ export default function ProductSettingsForm() {
                             fullWidth
                         />
                     </Grid>
+
                     <Grid item xs={12} md={3}>
                         <RHFTextField
                             name="defaultProfitPercent"
@@ -98,14 +89,22 @@ export default function ProductSettingsForm() {
                         />
                     </Grid>
 
-
                     <Grid item xs={12} md={3}>
                         <RHFSelectField
                             name="defaultUnit"
                             control={control}
                             label="Default Unit"
-                            options={units}
+                            options={settingsValue?.units}
                             error={errors.defaultUnit?.message}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12} md={3}>
+                        <RHFCheckBox
+                            name="continuousInventory"
+                            control={control}
+                            label="Continuous Inventory"
+                            sx={{ mt: 1.5 }}
                         />
                     </Grid>
 
@@ -134,15 +133,6 @@ export default function ProductSettingsForm() {
 
                     <Grid item xs={12} md={3}>
                         <RHFCheckBox
-                            name="continuousInventory"
-                            control={control}
-                            label="Continuous Inventory"
-                            sx={{ mt: 1.5 }}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12} md={3}>
-                        <RHFCheckBox
                             name="enableProductExpiry"
                             control={control}
                             label="Enable Product Expiry"
@@ -156,7 +146,7 @@ export default function ProductSettingsForm() {
                                 name="onProductExpiry"
                                 control={control}
                                 label="On Product Expiry"
-                                options={expiryActions}
+                                options={settingsValue?.product_expiry_sale}
                                 error={errors.onProductExpiry?.message}
                             />
                         </Grid>
