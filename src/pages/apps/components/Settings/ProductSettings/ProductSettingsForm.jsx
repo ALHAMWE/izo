@@ -25,7 +25,7 @@ const schema = yup.object({
     })
 });
 
-export default function ProductSettingsForm({ settingsInfo, settingsValue, onSuccess, onError, loading }) {
+export default function ProductSettingsForm({ settingsInfo, settingsValue  }) {
     const {
         control,
         handleSubmit,

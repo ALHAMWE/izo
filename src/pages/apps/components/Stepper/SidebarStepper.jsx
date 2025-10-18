@@ -27,7 +27,8 @@ const SidebarStepperWrapper = styled(CardContent)(({ theme }) => ({
     }
 }));
 
-const MobileStepContainer = styled(Box)(({ theme }) => ({
+// const MobileStepContainer = styled(Box)(({ theme }) => ({
+const MobileStepContainer = styled(Box)(( ) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

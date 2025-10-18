@@ -8,9 +8,11 @@ const safeDate = (val) => {
     if (val instanceof Date && !isNaN(val)) return val;
     if (typeof val === 'string' || val instanceof String) {
         const parsed = new Date(val);
-        return isNaN(parsed) ? null : parsed;
+
+return isNaN(parsed) ? null : parsed;
     }
-    return null;
+
+return null;
 };
 const RHFDatePicker = ({ name, control, label, ...rest }) => (
     <DatePickerWrapper>

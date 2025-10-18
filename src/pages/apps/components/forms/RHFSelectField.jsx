@@ -15,7 +15,7 @@ const RHFSelectField = ({
         <Controller
             name={name}
             control={control}
-            render={({ field, fieldState }) => (
+            render={({ field  }) => (
                 <Select
                     {...field}
                     label={label}

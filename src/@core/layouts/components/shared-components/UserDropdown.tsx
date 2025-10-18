@@ -103,8 +103,29 @@ const UserDropdown = (props: Props) => {
 
   const handleLogout = () => {
     logout()
-    deleteCookie("token");
+
     deleteCookie("key");
+    deleteCookie("token");
+    deleteCookie("BusinessName");
+    deleteCookie("CurrencySymbolPlacement");
+    deleteCookie("DateFormat");
+    deleteCookie("DecimalFormat");
+    deleteCookie("DefaultProfit");
+    deleteCookie("FinancialYearStartMonth");
+    deleteCookie("StartDate");
+    deleteCookie("StockAccountingMethod");
+    deleteCookie("TimeFormat");
+    deleteCookie("TimeZone");
+    deleteCookie("TransactionEditDays");
+    deleteCookie("fontStyle");
+    deleteCookie("FilterInitial");
+    deleteCookie("DatabaseConnection");
+    deleteCookie("imgUrl");
+    deleteCookie("userName");
+    deleteCookie("apiUrl");
+    deleteCookie("currency_id");
+    deleteCookie("currency_code");
+
     router.replace("/login")
     handleDropdownClose()
     notify("Logout successfully", "success")
