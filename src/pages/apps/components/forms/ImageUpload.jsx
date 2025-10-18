@@ -23,9 +23,10 @@ const ImageUpload = ({ value, onChange, error, text = "Upload Image" }) => {
       setWindowWidth(window.innerWidth);
       const handleResize = () => setWindowWidth(window.innerWidth);
       window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
     }
-  }, []);
+  }, [windowWidth]);
 
   useEffect(() => {
     if (value) {
@@ -37,7 +38,8 @@ const ImageUpload = ({ value, onChange, error, text = "Upload Image" }) => {
     } else {
       setPreview(PlaceholderImg);
     }
-    return () => {
+
+return () => {
       if (preview && preview.startsWith('blob:')) {
         URL.revokeObjectURL(preview);
       }
@@ -52,11 +54,13 @@ const ImageUpload = ({ value, onChange, error, text = "Upload Image" }) => {
     if (file) {
       if (!file.type.startsWith('image/')) {
         alert('Please select an image file');
-        return;
+
+return;
       }
       if (file.size > 5 * 1024 * 1024) {
         alert('File size should be less than 5MB');
-        return;
+
+return;
       }
       onChange(file);
     }

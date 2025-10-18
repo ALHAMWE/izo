@@ -24,7 +24,7 @@ const schema = yup.object({
     supplierAccountType: yup.string().required('Required')
 });
 
-export default function AccountSettingsForm({ settingsInfo, settingsValue, onSuccess, onError, loading }) {
+export default function AccountSettingsForm({ settingsInfo, settingsValue }) {
     const {
         control,
         handleSubmit,

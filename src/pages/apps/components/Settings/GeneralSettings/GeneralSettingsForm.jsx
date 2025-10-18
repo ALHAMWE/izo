@@ -43,7 +43,7 @@ const schemaStep3 = yup.object({
     numbersAfterCommaQty: yup.string().required('Required')
 });
 
-const GeneralSettingsForm = ({ settingsInfo, settingsValue, onSuccess, onError, loading }) => {
+const GeneralSettingsForm = ({ settingsInfo, settingsValue  }) => {
     const [activeStep, setActiveStep] = useState(0);
 
     const defaultValues = {

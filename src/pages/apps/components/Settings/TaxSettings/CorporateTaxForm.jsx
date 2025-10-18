@@ -38,10 +38,11 @@ export default function CorporateTaxForm() {
         resolver: yupResolver(schema)
     });
 
-    const onSubmit = data => { /* Handle save */ };
+    // const onSubmit = data => { /* Handle save */ };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        // <form onSubmit={handleSubmit(onSubmit)}>
+        <form  >
             <Typography variant="h6" sx={{ fontWeight: 600 }}>Corporate Tax Details</Typography>
             <Grid container columnSpacing={4} rowSpacing={0}>
                 <Grid item xs={12} md={4}>
