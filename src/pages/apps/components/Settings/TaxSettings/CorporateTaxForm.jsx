@@ -25,7 +25,7 @@ const schema = yup.object({
 });
 
 export default function CorporateTaxForm() {
-    const { control, handleSubmit, setValue } = useForm({
+    const { control,   setValue } = useForm({
         defaultValues: {
             registrationStatus: '',
             ctRegistrationNo: '',

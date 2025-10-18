@@ -28,7 +28,7 @@ const schema = yup.object({
 });
 
 export default function VATTaxForm() {
-    const { control, handleSubmit } = useForm({
+    const { control  } = useForm({
         defaultValues: {
             registrationStatus: 'yes',
             registrationDate: null,
