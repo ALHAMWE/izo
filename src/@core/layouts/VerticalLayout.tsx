@@ -17,13 +17,22 @@ import { LayoutProps } from 'src/@core/layouts/types'
 
 // ** Components
 import AppBar from './components/vertical/appBar'
-import Customizer from 'src/@core/components/customizer'
+// import Customizer from 'src/@core/components/customizer'
+
+import dynamic from 'next/dynamic'
+
 import Navigation from './components/vertical/navigation'
 import Footer from './components/shared-components/footer'
 import ScrollToTop from 'src/@core/components/scroll-to-top'
 
 // ** Util Import
 import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+
+const Customizer = dynamic(
+  () => import('src/@core/components/customizer'),
+  { ssr: false }
+)
+
 
 const VerticalLayoutWrapper = styled('div')({
   height: '100%',

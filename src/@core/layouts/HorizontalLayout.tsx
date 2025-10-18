@@ -15,7 +15,9 @@ import themeConfig from 'src/configs/themeConfig'
 import { LayoutProps } from 'src/@core/layouts/types'
 
 // ** Components
-import Customizer from 'src/@core/components/customizer'
+// import Customizer from 'src/@core/components/customizer'
+import dynamic from 'next/dynamic'
+
 import Footer from './components/shared-components/footer'
 import Navigation from './components/horizontal/navigation'
 import ScrollToTop from 'src/@core/components/scroll-to-top'
@@ -23,6 +25,11 @@ import AppBarContent from './components/horizontal/app-bar-content'
 
 // ** Util Import
 import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+
+const Customizer = dynamic(
+  () => import('src/@core/components/customizer'),
+  { ssr: false }
+)
 
 const HorizontalLayoutWrapper = styled('div')({
   height: '100%',

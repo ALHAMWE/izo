@@ -405,8 +405,8 @@ const navigation = (): VerticalNavItemsType => {
       icon: 'ic:round-settings',
       children: [
         {
-          title: 'Business Settings',
-          path: '/apps/settings/business-settings'
+          title: 'General Settings',
+          path: '/apps/settings'
         },
         {
           title: 'Invoice Settings',

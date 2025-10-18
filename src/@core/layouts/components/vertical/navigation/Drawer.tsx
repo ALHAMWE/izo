@@ -1,3 +1,6 @@
+// ** React Imports
+import { useState, useEffect } from 'react'
+
 // ** MUI Imports
 import { styled } from '@mui/material/styles'
 import MuiSwipeableDrawer, { SwipeableDrawerProps } from '@mui/material/SwipeableDrawer'
@@ -53,10 +56,18 @@ const Drawer = (props: Props) => {
     navigationBorderWidth
   } = props
 
+  // ** State
+  const [mounted, setMounted] = useState(false)
+
   // ** Vars
   const { skin, navCollapsed } = settings
 
   let flag = true
+
+  // ** Effect to handle client-side mounting
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Drawer Props for Mobile & Tablet screens
   const MobileDrawerProps = {
@@ -73,18 +84,20 @@ const Drawer = (props: Props) => {
     open: true,
     onOpen: () => null,
     onClose: () => null,
-    onMouseEnter: () => {
-      // Declared flag to resolve first time flicker issue while trying to collapse the menu
-      if (flag || navCollapsed) {
-        setNavHover(true)
-        flag = false
+    ...(mounted && {
+      onMouseEnter: () => {
+        // Declared flag to resolve first time flicker issue while trying to collapse the menu
+        if (flag || navCollapsed) {
+          setNavHover(true)
+          flag = false
+        }
+      },
+      onMouseLeave: () => {
+        if (navCollapsed) {
+          setNavHover(false)
+        }
       }
-    },
-    onMouseLeave: () => {
-      if (navCollapsed) {
-        setNavHover(false)
-      }
-    }
+    })
   }
 
   let userNavMenuStyle = {}
@@ -121,6 +134,8 @@ const Drawer = (props: Props) => {
         ...userNavMenuStyle
       }}
       {...userNavMenuProps}
+      disableDiscovery={!mounted}
+      disableSwipeToOpen={!mounted}
     >
       {children}
     </SwipeableDrawer>

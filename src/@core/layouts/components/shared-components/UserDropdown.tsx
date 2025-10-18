@@ -50,7 +50,7 @@ const UserDropdown = (props: Props) => {
 
   //** Redux
   const img = useSelector((state: RootState) => state.login.imgUrl)
-  console.log(img, "img")
+  // console.log(img, "img")
   const userName = useSelector((state: RootState) => state.login.userName)
 
   //** Cookies
