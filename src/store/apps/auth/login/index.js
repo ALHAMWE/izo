@@ -82,8 +82,8 @@ export const loginSlice = createSlice({
         state.TimeFormat = action.payload?.global_data[0]?.global_settings.TimeFormat
         state.TimeZone = action.payload?.global_data[0]?.global_settings.TimeZone
         state.TransactionEditDays = action.payload?.global_data[0]?.global_settings.TransactionEditDays
-        ;(state.fontStyle = action.payload?.global_data[0]?.global_settings.fontStyle),
-          (state.FilterInitial = action.payload?.global_data[0]?.global_settings.FilterInitial)
+        state.fontStyle = action.payload?.global_data[0]?.global_settings.fontStyle
+        state.FilterInitial = action.payload?.global_data[0]?.global_settings.FilterInitial
 
         if (
           action.payload?.global_data &&
