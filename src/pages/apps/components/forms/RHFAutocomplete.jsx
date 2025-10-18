@@ -17,25 +17,26 @@ const RHFAutocomplete = ({
         render={({ field: { ref, onChange, value, ...field }, fieldState }) => (
             <Autocomplete
                 options={options}
-                getOptionLabel={option => option.label || ''}
-                isOptionEqualToValue={(option, val) => option.value === val.value}
+                getOptionLabel={(option) => option.value || ''}
+                isOptionEqualToValue={(option, val) => option.value === (val?.value ?? val)}
                 multiple={multiple}
                 disableCloseOnSelect={multiple}
                 value={
                     multiple
-                        ? options.filter(opt =>
-                            Array.isArray(value)
-                                ? value.includes(opt.value)
-                                : value === opt.value
-                        )
-                        : options.find(opt => opt.value === value) || null
+                        ? Array.isArray(value)
+                            ? options.filter((opt) => value.includes(opt.value))
+                            : []
+                        : options.find((opt) => opt.value === value) || null
                 }
-                onChange={(_, data) =>
-                    multiple
-                        ? onChange(data.map(item => item.value))
-                        : onChange(data ? data.value : null)
-                }
-                renderInput={params => (
+                onChange={(_, data) => {
+                    if (multiple) {
+                        const values = Array.isArray(data) ? data.map((it) => it.value) : [];
+                        onChange(values);
+                    } else {
+                        onChange(data ? data.value : null);
+                    }
+                }}
+                renderInput={(params) => (
                     <TextField
                         {...params}
                         label={label}

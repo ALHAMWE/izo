@@ -7,12 +7,6 @@ import RHFSelectField from '../../forms/RHFSelectField';
 import RHFAutocomplete from '../../forms/RHFAutocomplete';
 import CustomGridContainer from '../../Common/CustomGridContainer';
 
-const expenseOptions = [
-    { label: 'Shipping', value: 'Shipping' },
-    { label: 'Custom Duty', value: 'Custom Duty' },
-    { label: 'Insurance', value: 'Insurance' }
-];
-
 const schema = yup.object({
     defaultCreditLimit: yup.number().typeError('Must be a number').required('Credit limit is required'),
     accountLiability: yup.string().required('Required'),
@@ -96,7 +90,7 @@ export default function AccountSettingsForm({ settingsInfo, settingsValue, onSuc
                             name="additionalExpense"
                             control={control}
                             label="Additional Expense"
-                            options={expenseOptions}
+                            options={settingsValue?.accounts_additional}
                             multiple
                             error={errors.additionalExpense?.message}
                         // helperText="Select one or more"

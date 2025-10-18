@@ -45,16 +45,6 @@ const FormatDisplayStep = ({ control, errors, settingsValue }) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <RHFSelectField
-                        name="openingBalanceVoucher"
-                        control={control}
-                        label="Opening Balance From Journal Voucher"
-                        options={settingsValue?.daily}
-                        error={errors.openingBalanceVoucher?.message}
-                        fullWidth
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <RHFSelectField
                         name="numbersAfterCommaAmount"
                         control={control}
                         label="Numbers After The Comma (Amounts)"

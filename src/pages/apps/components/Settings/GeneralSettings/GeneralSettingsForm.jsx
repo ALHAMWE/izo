@@ -6,17 +6,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import BusinessIcon from '@mui/icons-material/Business';
-import SettingsIcon from '@mui/icons-material/Settings';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import SidebarStepper from '../../Stepper/SidebarStepper';
 import BusinessInformationStep from './BusinessInformationStep';
-import AccountSettingsStep from './AccountSettingsStep';
 import FormatDisplayStep from './FormatDisplayStep';
 import { getImageUrl, getTimeFormat } from 'src/utils/helper';
 
 const steps = [
     { title: 'Business Information', icon: <BusinessIcon />, subtitle: 'General company details' },
-    { title: 'Account Settings', icon: <SettingsIcon />, subtitle: 'Fiscal and Profit setup' },
     { title: 'Format and Display', icon: <FormatListBulletedIcon />, subtitle: 'UI preferences' }
 ];
 
@@ -25,20 +22,17 @@ const schemaStep1 = yup.object({
     businessName: yup.string().required('Business Name is Required'),
     currency: yup.string().required('Currency is Required'),
     timeZone: yup.string().required('Time zone is Required'),
-    logo: yup.mixed().nullable()
-});
-const schemaStep2 = yup.object({
+    logo: yup.mixed().nullable(),
+    openingBalanceVoucher: yup.array().of(yup.string().required('Required')).required('Required'),
     fixingDate: yup.date().nullable(),
     startDate: yup.date().typeError('Start Date is Required').nullable().required('Start Date is Required'),
     financialYearStartMonth: yup.string().required('Required'),
-    defaultProfitPercent: yup.number().typeError('Must be a number').required('Required'),
-    // continuousInventory: yup.boolean()
 });
-const schemaStep3 = yup.object({
+
+const schemaStep2 = yup.object({
     dateFormat: yup.string().required('Required'),
     timeFormat: yup.string().required('Required'),
     currencySymbolPlacement: yup.string().required('Required'),
-    openingBalanceVoucher: yup.string().required('Required'),
     numbersAfterCommaAmount: yup.string().required('Required'),
     numbersAfterCommaQty: yup.string().required('Required')
 });
@@ -50,15 +44,16 @@ const GeneralSettingsForm = ({ settingsInfo, settingsValue, onSuccess, onError, 
         businessName: settingsInfo?.name || '',
         currency: settingsValue?.currencies.find(c => c.id === settingsInfo?.currency_id)?.value || '',
         timeZone: settingsInfo?.time_zone,
-        logo: getImageUrl(settingsInfo?.logo, 'business_logo'),
+        logo: settingsInfo?.logo,
         fixingDate: settingsInfo?.transaction_edit_date,
         startDate: settingsInfo?.start_date,
         financialYearStartMonth: settingsValue?.months.find(m => m.id === settingsInfo?.fy_start_month)?.value || '',
-        defaultProfitPercent: 0,
         dateFormat: settingsValue?.date_formats.find(d => d.id === settingsInfo?.date_format)?.value || '',
         timeFormat: getTimeFormat(settingsInfo?.time_format) || '',
         currencySymbolPlacement: settingsValue?.currency_symbol_placement.find(d => d.id === settingsInfo?.currency_symbol_placement)?.value || '',
-        openingBalanceVoucher: '',
+        openingBalanceVoucher: settingsValue?.daily
+            .filter(d => settingsInfo?.journal_voucher_list.includes(d.id.toString()))
+            .map(d => d.value) || [],
         numbersAfterCommaAmount: settingsValue?.amount_digit.find(d => d.id === settingsInfo?.amount_currency_precision)?.value || '0.00',
         numbersAfterCommaQty: settingsValue?.amount_digit.find(d => d.id === settingsInfo?.qty_currency_precision)?.value || '0.00',
     };
@@ -72,16 +67,15 @@ const GeneralSettingsForm = ({ settingsInfo, settingsValue, onSuccess, onError, 
     } = useForm({
         defaultValues,
         resolver: yupResolver(
-            activeStep === 0 ? schemaStep1 : activeStep === 1 ? schemaStep2 : schemaStep3
+            activeStep === 0 ? schemaStep1 : schemaStep2
         ),
         mode: 'onTouched'
     });
 
     // Fields to validate for each step
     const stepFields = [
-        ['businessName', 'currency', 'timeZone', 'logo'],
-        ['fixingDate', 'startDate', 'financialYearStartMonth', 'defaultProfitPercent'],
-        ['dateFormat', 'timeFormat', 'currencySymbolPlacement', 'openingBalanceVoucher', 'numbersAfterCommaAmount', 'numbersAfterCommaQty']
+        ['businessName', 'currency', 'timeZone', 'logo', 'openingBalanceVoucher', 'fixingDate', 'startDate', 'financialYearStartMonth'],
+        ['dateFormat', 'timeFormat', 'currencySymbolPlacement', 'numbersAfterCommaAmount', 'numbersAfterCommaQty']
     ];
 
     const onNext = async () => {
@@ -93,7 +87,7 @@ const GeneralSettingsForm = ({ settingsInfo, settingsValue, onSuccess, onError, 
     const onSubmit = async (data) => {
         try {
             // Replace with your submission logic
-            alert('Business settings saved!\n\n' + JSON.stringify(data, null, 2));
+            // alert('Business settings saved!\n\n' + JSON.stringify(data, null, 2));
         } catch {
             // Handle error
         }
@@ -102,8 +96,7 @@ const GeneralSettingsForm = ({ settingsInfo, settingsValue, onSuccess, onError, 
     // Step content panels
     const stepPanels = [
         <BusinessInformationStep key="step1" control={control} errors={errors} setValue={setValue} settingsValue={settingsValue} />,
-        <AccountSettingsStep key="step2" control={control} errors={errors} settingsValue={settingsValue} />,
-        <FormatDisplayStep key="step3" control={control} errors={errors} settingsValue={settingsValue} />
+        <FormatDisplayStep key="step2" control={control} errors={errors} settingsValue={settingsValue} />
     ];
 
     return (

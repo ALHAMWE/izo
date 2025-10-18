@@ -11,18 +11,16 @@ import GeneralSettingsForm from '../components/Settings/GeneralSettings/GeneralS
 import TaxSettingsTabs from '../components/Settings/TaxSettings/TaxTabPanel';
 import ProductSettingsForm from '../components/Settings/ProductSettings/ProductSettingsForm';
 import AccountsSettingsForm from '../components/Settings/AccountSettings/AccountSettingForm';
-import PurchasesSettingsForm from '../components/Settings/PurchasesSettings/PurchasesSettingsForm';
-import SalesSettingsForm from '../components/Settings/SalesSettings/SalesSettingsForm';
 import { settingsAPI } from '../../../lib/api/services/settings';
 import notify from '../../../utils/notify';
 import Loader from '../components/Common/Loader';
+import InvoiceSettingsForm from '../components/Settings/InvoiceSettings/InvoiceSettingsForm';
 
 const tabLabels = [
     'General Settings',
     'Product',
     'Accounts',
-    'Purchases',
-    'Sales',
+    'Invoices',
     'Tax',
 ];
 
@@ -143,13 +141,6 @@ export default function BusinessSettingsPage() {
                     </Alert>
                 )}
 
-                {/* Loading State (partial, after first load) */}
-                {/* {loading && (
-                    <Box display="flex" justifyContent="center" sx={{ mb: 3 }}>
-                        <Loader message="Loading settings..." />
-                    </Box>
-                )} */}
-
                 {/* Content */}
                 <TabPanel value={tabIndex} index={0}>
                     <GeneralSettingsForm
@@ -182,7 +173,7 @@ export default function BusinessSettingsPage() {
                 </TabPanel>
 
                 <TabPanel value={tabIndex} index={3}>
-                    <PurchasesSettingsForm
+                    <InvoiceSettingsForm
                         settingsInfo={settingsInfo}
                         settingsValue={settingsValue}
                         onSuccess={handleSuccess}
@@ -192,16 +183,6 @@ export default function BusinessSettingsPage() {
                 </TabPanel>
 
                 <TabPanel value={tabIndex} index={4}>
-                    <SalesSettingsForm
-                        settingsInfo={settingsInfo}
-                        settingsValue={settingsValue}
-                        onSuccess={handleSuccess}
-                        onError={handleError}
-                        loading={loading}
-                    />
-                </TabPanel>
-
-                <TabPanel value={tabIndex} index={5}>
                     <TaxSettingsTabs
                         settingsInfo={settingsInfo}
                         settingsValue={settingsValue}

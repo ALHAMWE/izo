@@ -3,20 +3,11 @@ import { Grid, Button, Box, Typography, Card } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import RHFCheckBox from '../../forms/RHFCheckBox';
+import RHFCheckBox from '../../forms/RHFSwitch';
 import RHFTextField from '../../forms/RHFTextField';
 import RHFSelectField from '../../forms/RHFSelectField';
 import CustomGridContainer from '../../Common/CustomGridContainer';
 import RHFDatePicker from '../../forms/RHFDatePicker';
-
-const costOfSalesAccounts = [
-    { label: 'Cost Account 1', value: 'cost1' },
-    { label: 'Cost Account 2', value: 'cost2' }
-];
-const inventoryAccounts = [
-    { label: 'Inventory Account 1', value: 'inventory1' },
-    { label: 'Inventory Account 2', value: 'inventory2' }
-];
 
 const schema = yup.object({
     defaultProfitPercent: yup.number().typeError('Profit Percent must be a Number').required('Default profit percent is Required'),
@@ -26,6 +17,7 @@ const schema = yup.object({
     inventoryAccount: yup.string().required('Inventory Account is Required'),
     skuPrefix: yup.string(),
     enableProductExpiry: yup.boolean(),
+    typeOfCost: yup.string().required('Please select Type of Cost'),
     onProductExpiry: yup.string().when('enableProductExpiry', {
         is: true,
         then: yup.string().required('Please select action on Product Expiry'),
@@ -45,8 +37,9 @@ export default function ProductSettingsForm({ settingsInfo, settingsValue, onSuc
             startFrom: '',
             continuousInventory: settingsInfo?.continuous_inventory || false,
             defaultUnit: settingsValue?.units.find(a => a.id === settingsInfo?.default_unit)?.value || '',
-            costOfSalesAccount: '',
-            inventoryAccount: '',
+            costOfSalesAccount: settingsValue?.accounts_inventory_sale_cost.find(a => a.id === settingsInfo?.inventory_sale_cost)?.value || '',
+            inventoryAccount: settingsValue?.accounts_inventory_stock.find(a => a.id === settingsInfo?.inventory_stock)?.value || '',
+            typeOfCost: settingsValue?.type_of_cost.find(a => a.id === settingsInfo?.type_of_cost)?.value || '',
             skuPrefix: settingsInfo?.sku_prefix || '',
             enableProductExpiry: settingsInfo?.enable_product_expiry || false,
             onProductExpiry: settingsValue?.product_expiry_sale.find(a => a.id === settingsInfo?.on_product_expiry)?.value || '',
@@ -115,7 +108,7 @@ export default function ProductSettingsForm({ settingsInfo, settingsValue, onSuc
                                     name="costOfSalesAccount"
                                     control={control}
                                     label="Cost of Sales Account"
-                                    options={costOfSalesAccounts}
+                                    options={settingsValue?.accounts_inventory_sale_cost}
                                     error={errors.costOfSalesAccount?.message}
                                 />
                             </Grid>
@@ -124,8 +117,17 @@ export default function ProductSettingsForm({ settingsInfo, settingsValue, onSuc
                                     name="inventoryAccount"
                                     control={control}
                                     label="Inventory Account"
-                                    options={inventoryAccounts}
+                                    options={settingsValue?.accounts_inventory_stock}
                                     error={errors.inventoryAccount?.message}
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={3}>
+                                <RHFSelectField
+                                    name="typeOfCost"
+                                    control={control}
+                                    label="Type of Cost"
+                                    options={settingsValue?.type_of_cost}
+                                    error={errors.typeOfCost?.message}
                                 />
                             </Grid>
                         </>
